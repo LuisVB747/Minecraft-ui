@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "ostream": "cpp",
+        "iostream": "cpp",
+        "memory_resource": "cpp",
+        "atomic": "cpp",
+        "*.ipp": "cpp",
+        "*.tcc": "cpp",
+        "bitset": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "functional": "cpp",
+        "string_view": "cpp",
+        "format": "cpp",
+        "ranges": "cpp",
+        "ratio": "cpp",
+        "streambuf": "cpp",
+        "*.inc": "cpp"
+    }
+}
