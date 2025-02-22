@@ -89,4 +89,12 @@ void ItemContainer::draw() {
     if (isMouseHovering()) { 
         this->hoverHighlighter.draw(this->collider.getMinX(),this->collider.getMinY());
     }
+    if (!this->isEmpty()) {
+        this->currentItem.draw(this->collider.getMinX(), this->collider.getMinY());
+    }
+    if(this->currentItemCount > 1){
+        ofDrawBitmapString(to_string(this->currentItemCount), 
+        this->collider.getMinX() + 50, 
+        this->collider.getMinY() + 55);
+    }
 }

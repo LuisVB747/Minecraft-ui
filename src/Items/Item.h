@@ -81,6 +81,9 @@ class Item {
             this->sprite = airSpr;
             this->name = "air";
         }
+        void draw(int x, int y) {
+            sprite.draw(x, y);
+        }
 
         // Useful operators that enable direct comparison of items.
 
