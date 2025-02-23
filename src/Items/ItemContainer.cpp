@@ -97,4 +97,7 @@ void ItemContainer::draw() {
         this->collider.getMinX() + 50, 
         this->collider.getMinY() + 55);
     }
+    if(isMouseHovering() && this->currentItem.getName() != "air"){
+        ofDrawBitmapStringHighlight(this->currentItem.getName(), this->collider.getMinX() + -5, this->collider.getMinY() + 60);
+    }
 }
