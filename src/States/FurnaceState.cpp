@@ -22,7 +22,16 @@ FurnaceState::FurnaceState(Player* player, ItemHandler* instantiatr) : State(pla
  */
 bool FurnaceState::canSmelt() {
     // TODO: Implement this method.
-    return true;
+    if (!burningContainer.isEmpty() && !resultContainer.isMaxed() && (fuel > 0 || !fuelContainer.isEmpty())){
+        if (resultContainer.isEmpty() || resultContainer.getCurrentItem() == this->instantiator->getItemFromNumber(getResultantItemNumber(this->burningContainer.getCurrentItem()))){
+            return true;
+        }else{
+            return false;
+        }
+    }else{
+        return false;        
+    }
+ 
 }
 
 /**
