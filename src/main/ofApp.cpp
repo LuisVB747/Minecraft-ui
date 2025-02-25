@@ -68,6 +68,11 @@ void ofApp::keyPressed(int key) { currentState->keyPressed(key); }
 void ofApp::giveItems() {
     this->player->addItem(instantiator->getItemFromNumber(55), 1, 26);
     this->chestState->addItem(instantiator->getItemFromNumber(2), 4);
+    this->chestState->addItem(instantiator->getItemFromNumber(5), 1);
+    this->chestState->addItem(instantiator->getItemFromNumber(10), 1);
+    this->chestState->addItem(instantiator->getItemFromNumber(15), 1);
+    this->chestState->addItem(instantiator->getItemFromNumber(20), 1);
+    this->chestState->addItem(instantiator->getItemFromNumber(25), 1);
 }
 
 
