@@ -95,7 +95,8 @@ void FurnaceState::mousePressed(int x, int y, int button) {
 };
 
 void FurnaceState::addSmeltableItems() {
-    this->smeltableItems = {2};
+    this->smeltableItems = {2, 31, 32, 38, 43, 45, 53};
+  
 }
 
 int FurnaceState::getResultantItemNumber(Item itm) {
