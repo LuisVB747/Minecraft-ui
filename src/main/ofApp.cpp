@@ -74,6 +74,11 @@ void ofApp::giveItems() {
     this->chestState->addItem(instantiator->getItemFromNumber(20), 1);
     this->chestState->addItem(instantiator->getItemFromNumber(25), 1);
 
+    // Testing
+    // this->chestState->addItem(instantiator->getItemFromNumber(40), 6);
+    // this->chestState->addItem(instantiator->getItemFromNumber(37), 6);
+    // this->chestState->addItem(instantiator->getItemFromNumber(41), 6);
+
 }
 
 

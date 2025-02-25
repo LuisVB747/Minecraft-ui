@@ -350,9 +350,9 @@ pair<Item, int> CraftingState::getItemFromRecipie(vector<int> grid) {
             result.second = 1;
         }
         if (grid == vector<int> // Beacon
-                {0, 0, 0,
-                0, 0, 0,
-                0, 0, 0}
+                {40, 40, 40,
+                40, 37, 40,
+                41, 41, 41}
             ) {
             result.first = instantiator->getItemFromNumber(42);
             result.second = 1;
@@ -381,14 +381,6 @@ pair<Item, int> CraftingState::getItemFromRecipie(vector<int> grid) {
             result.first = instantiator->getItemFromNumber(56);
             result.second = 1;
         } 
-        if (grid == vector<int>
-                {40, 40, 40,
-                40, 37, 40,
-                41, 41, 41}
-        ){
-            result.first = instantiator->getItemFromNumber(42);
-            result.second = 1;
-        }
         return result;    
 }
 
