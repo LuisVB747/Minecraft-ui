@@ -22,8 +22,17 @@ FurnaceState::FurnaceState(Player* player, ItemHandler* instantiatr) : State(pla
  */
 bool FurnaceState::canSmelt() {
     // TODO: Implement this method.
-    return true;
+    if(this->burningContainer.isEmpty() && !this->resultContainer.isMaxed() && (this->fuel > 0 || this->fuelContainer.getCurrentItem().getFuelLevel())){
+        if(this->resultContainer.isEmpty() || this->resultContainer.getCurrentItem() == this->instantiator->getItemFromNumber(getResultantItemNumber(this->burningContainer.getCurrentItem()))){
+            return true;
+        }else{
+            return false;
+        }
+    }else{
+        return false;
+    }    
 }
+
 
 /**
  * Smelts the current item in the burning container.
@@ -54,6 +63,7 @@ void FurnaceState::smelt() {
     burningContainer.isEmpty() ? fuel = 0 : fuel--;
     
 }
+
 
 
 void FurnaceState::update() { if (canSmelt()) smelt(); };
