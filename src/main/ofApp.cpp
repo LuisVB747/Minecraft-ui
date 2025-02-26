@@ -62,7 +62,14 @@ void ofApp::update() {
     }
 void ofApp::draw() { currentState->draw();}
 void ofApp::mouseMoved(int x, int y) { currentState->mouseMoved(x,y); }
-void ofApp::keyPressed(int key) { currentState->keyPressed(key); }
+void ofApp::keyPressed(int key){
+    if (key == 'B' || key == 'b') {  // Check if 'B' or 'b' is pressed
+        this->player->addItem(instantiator->getItemFromNumber(40), 5);
+        this->player->addItem(instantiator->getItemFromNumber(41), 3);
+        this->player->addItem(instantiator->getItemFromNumber(37), 1);
+}
+ { currentState->keyPressed(key); }
+}
 
 // Helper function that gives the player, or the chest, items.
 void ofApp::giveItems() {
@@ -73,6 +80,7 @@ void ofApp::giveItems() {
     this->chestState->addItem(instantiator->getItemFromNumber(15), 1);
     this->chestState->addItem(instantiator->getItemFromNumber(20), 1);
     this->chestState->addItem(instantiator->getItemFromNumber(25), 1);
+
 
     // Testing
     // this->chestState->addItem(instantiator->getItemFromNumber(40), 6);
