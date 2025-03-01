@@ -68,6 +68,16 @@ void ofApp::keyPressed(int key){
         this->player->addItem(instantiator->getItemFromNumber(41), 3);
         this->player->addItem(instantiator->getItemFromNumber(37), 1);
 }
+if (key == 'E' || key == 'e') {  // Check if 'E' or 'e' is pressed
+    this->player->addItem(instantiator->getItemFromNumber(50), 64);
+    this->player->addItem(instantiator->getItemFromNumber(42), 5);
+    this->player->addItem(instantiator->getItemFromNumber(18), 1);
+    this->player->addItem(instantiator->getItemFromNumber(8), 1);
+    this->player->addItem(instantiator->getItemFromNumber(23), 1);
+    this->player->addItem(instantiator->getItemFromNumber(13), 1);
+    this->player->addItem(instantiator->getItemFromNumber(28), 1);
+
+}
  { currentState->keyPressed(key); }
 }
 

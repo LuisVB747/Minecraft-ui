@@ -381,7 +381,48 @@ pair<Item, int> CraftingState::getItemFromRecipie(vector<int> grid) {
             result.first = instantiator->getItemFromNumber(56);
             result.second = 1;
         } 
+        if(grid == vector<int> // Ender Sword
+                {50, 50, 50,
+                50, 18,50,
+                50, 42, 50}
+            ){
+            result.first = instantiator->getItemFromNumber(57);
+            result.second = 1;
+            }
+        if(grid == vector<int> // Ender pickaxe
+                {50, 50, 50,
+                50, 8,50,
+                50, 42, 50}
+        ){
+            result.first = instantiator->getItemFromNumber(58);
+            result.second = 1;
+            }
+        if(grid == vector<int> // Ender Hoe
+                {50, 50, 50,
+                50, 28,50,
+                50, 42, 50}
+            ){
+            result.first = instantiator->getItemFromNumber(59);
+            result.second = 1;
+            }
+        if(grid == vector<int> // Ender Axe
+                {50, 50, 50,
+                50, 23,50,
+                50, 42, 50}
+        ){
+            result.first = instantiator->getItemFromNumber(60);
+            result.second = 1;
+        }
+        if(grid == vector<int> // Ender Shovel
+                {50, 50, 50,
+                50, 13,50,
+                50, 42, 50}
+        ){
+            result.first = instantiator->getItemFromNumber(61);
+            result.second = 1;
+        }
         return result;    
+
 }
 
 

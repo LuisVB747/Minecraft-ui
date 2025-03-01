@@ -40,6 +40,7 @@ void GeneratorState::generateItem() {
     // Select the tool's tier. The closer the value is to zero, the better the tool
     double toolTier = 100;
     if (toolName.find("Diamond") != string::npos) toolTier = 1.5; 
+    else if (toolName.find("Ender") != string::npos) toolTier = 0.001;
     else if (toolName.find("Gold") != string::npos) toolTier = 2;
     else if (toolName.find("Iron") != string::npos) toolTier = 5;
     else if (toolName.find("Stone") != string::npos) toolTier = 8;
