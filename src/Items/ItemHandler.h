@@ -99,5 +99,13 @@ class ItemHandler {
             itemList.push_back(Item(54, 64, 0, getSpriteFromSheet(4, 16), "Cooked potato"));
             itemList.push_back(Item(55, 64, 0, getSpriteFromSheet(11, 11), "Apple"));
             itemList.push_back(Item(56, 64, 0, getSpriteFromSheet(12, 11), "Golden Apple"));
+
+
+            // Ender tools 
+            itemList.push_back(Item(57, 1, 0, getSpriteFromSheet(16, 9), "Ender Sword"));
+            itemList.push_back(Item(58, 1, 0, getSpriteFromSheet(19, 9), "Ender Pickaxe"));
+            itemList.push_back(Item(59, 1, 0, getSpriteFromSheet(20, 9), "Ender Hoe"));
+            itemList.push_back(Item(60, 1, 0, getSpriteFromSheet(21, 9), "Ender Axe"));
+            itemList.push_back(Item(61, 1, 0, getSpriteFromSheet(22, 9), "Ender Shovel"));
         }
 };
