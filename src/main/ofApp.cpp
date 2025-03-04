@@ -7,6 +7,7 @@ void ofApp::setup() {
     this->craftingState = new CraftingState(player,instantiator);
     this->furnaceState = new FurnaceState(player,instantiator);
     this->generatorState= new GeneratorState(player,instantiator);
+    this->armorState = new ArmorState(player,instantiator);
 
     this->relaxingMusic.load("audio/miceOnVenus.mp3");
     this->relaxingMusic.play();
