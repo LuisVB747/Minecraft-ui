@@ -1,6 +1,5 @@
 #pragma once
 #include "State.h"
-#include "Player.h"
 
 /**
  * @class ArmorState
@@ -8,41 +7,53 @@
  */
 class ArmorState : public State {
 private: 
-
     vector<ItemContainer> armorGrid; //grid for the armor
     ItemHandler* instantiator; // pointer to the item
+    ItemContainer Helmet;
+    ItemContainer Chestplate;
+    ItemContainer Leggins;
+    ItemContainer Boots;
 public:
     /**
      * @brief Constructs an ArmorState object with a player pointer.
-     * @param plyr Pointer to the player object.
+     * @param player Pointer to the player object.
+     * @param instantiator Item handler pointer
      */
     ArmorState(Player* player, ItemHandler* instantiator);
 
     /**
      * @brief Equips armor if the player has it in their inventory.
-     * @param itemID The ID of the armor item.
+     * @param slot The name of the slot.
      */
-    void equipArmor(int itemID);
+    void equipArmor(Item newItem);
 
     /**
      * @brief Removes equipped armor.
      * @param slot The slot from which to remove the armor.
      */
-    void removeArmor(int slot);
+    bool canEquip();
 
     /**
      * @brief Updates the state.
      */
-    void update() override;
+    void update();
 
     /**
      * @brief Draws the state.
      */
-    void draw() override;
+    void draw();
+
+    void keyPressed(int key);
+    /**
+     * @brief Handles mouse press events.
+     * @param x The x-coordinate of the mouse.
+     * @param y The y-coordinate of the mouse.
+     */
+    void mouseMoved(int x, int y);
 
     /**
-     * @brief Handles key press events.
-     * @param key The key that was pressed.
+     * @brief Handles key press events. Mandatory unused implementation.
      */
-    void keyPressed(int key) override;
+    void mousePressed(int x, int y, int button);
 };
+

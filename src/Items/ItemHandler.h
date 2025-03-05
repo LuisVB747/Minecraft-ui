@@ -107,5 +107,28 @@ class ItemHandler {
             itemList.push_back(Item(59, 1, 0, getSpriteFromSheet(20, 9), "Ender Hoe"));
             itemList.push_back(Item(60, 1, 0, getSpriteFromSheet(21, 9), "Ender Axe"));
             itemList.push_back(Item(61, 1, 0, getSpriteFromSheet(22, 9), "Ender Shovel"));
+            // Helmets
+            itemList.push_back(Item(62, 1, 0, getSpriteFromSheet(1, 11), "Leather helmet"));
+            itemList.push_back(Item(63, 1, 0, getSpriteFromSheet(3, 11), "Iron helmet"));
+            itemList.push_back(Item(64, 1, 0, getSpriteFromSheet(4, 11), "Diamond helmet"));
+            itemList.push_back(Item(65, 1, 0, getSpriteFromSheet(5, 11), "Gold helmet"));
+            // Chestplate
+            itemList.push_back(Item(66, 1, 0, getSpriteFromSheet(17, 11), "Leather Chestplate"));
+            itemList.push_back(Item(67, 1, 0, getSpriteFromSheet(19, 11), "Iron Chestplate"));
+            itemList.push_back(Item(68, 1, 0, getSpriteFromSheet(20, 11), "Diamond Chestplate"));
+            itemList.push_back(Item(69, 1, 0, getSpriteFromSheet(21, 11), "Gold Chestplate"));
+            // Leggings
+            itemList.push_back(Item(70, 1, 0, getSpriteFromSheet(10, 12), "Leather Leggings"));
+            itemList.push_back(Item(71, 1, 0, getSpriteFromSheet(12, 12), "Iron Leggings"));
+            itemList.push_back(Item(72, 1, 0, getSpriteFromSheet(13, 12), "Diamond Leggings"));
+            itemList.push_back(Item(73, 1, 0, getSpriteFromSheet(14, 12), "Gold Leggings"));
+            // Boots
+            itemList.push_back(Item(74, 1, 0, getSpriteFromSheet(3, 13), "Leather Boots"));
+            itemList.push_back(Item(75, 1, 0, getSpriteFromSheet(5, 13), "Iron Boots"));
+            itemList.push_back(Item(76, 1, 0, getSpriteFromSheet(6, 13), "Diamond Boots"));
+            itemList.push_back(Item(77, 1, 0, getSpriteFromSheet(7, 13), "Gold Boots"));
+
+            itemList.push_back(Item(78, 1, 0, getSpriteFromSheet(12, 15), "Leather"));
+
         }
 };
