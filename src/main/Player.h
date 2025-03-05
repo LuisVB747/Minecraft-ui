@@ -47,12 +47,16 @@ class Player {
             StateButton generatorStateButton{"generator", HORZ_ALIGN + (3 * DISTANCE_BETWEEN_BUTTONS), VERT_ALIGN};
             StateButton armorStateButton{"Armor", HORZ_ALIGN + (4 * DISTANCE_BETWEEN_BUTTONS), VERT_ALIGN};
 
+            StateButton worldStateButton{"world", HORZ_ALIGN + (6 * DISTANCE_BETWEEN_BUTTONS), VERT_ALIGN};
+
+
 
             this->buttons.push_back(chestStateButton);
             this->buttons.push_back(craftingStateButton);
             this->buttons.push_back(furnaceStateButton);
             this->buttons.push_back(generatorStateButton);
             this->buttons.push_back(armorStateButton);
+            this->buttons.push_back(worldStateButton);
 
         }
 
