@@ -42,6 +42,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/${workspaceFolderBasename}.exe",
+            // "program": "C:\openframeworks\apps\Myapps\pa1-pullout_bros\bin\pa1-pullout_bros.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

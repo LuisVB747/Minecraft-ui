@@ -421,6 +421,93 @@ pair<Item, int> CraftingState::getItemFromRecipie(vector<int> grid) {
             result.first = instantiator->getItemFromNumber(61);
             result.second = 1;
         }
+        // Iron Armor
+        if(grid == vector<int> //Iron Helmet
+                {32, 32, 32,
+                32, 0, 32,
+                0, 0, 0}){
+            result.first = instantiator->getItemFromNumber(63);
+            result.second = 1;
+        }
+        if(grid == vector<int> // Iron Chestplate
+                {32, 0, 32,
+                32, 32, 32,
+                32, 32, 32}){
+            result.first = instantiator->getItemFromNumber(67);
+            result.second = 1;
+        }
+        if(grid == vector<int> // Iron leggings
+                {32, 32, 32,
+                32, 0, 32,
+                32, 0, 32}){
+            result.first = instantiator->getItemFromNumber(71);
+            result.second = 1;
+        }
+        if(grid == vector<int> // Iron Boots
+                {0, 0, 0,
+                32, 0, 32,
+                32, 0, 32}){
+            result.first = instantiator->getItemFromNumber(75);
+            result.second = 1;
+        }
+        // Diamond Armor
+        if(grid == vector<int> //Diamond Helmet
+            {36, 36, 36,
+            36, 0, 36,
+            0, 0, 0}){
+        result.first = instantiator->getItemFromNumber(64);
+        result.second = 1;
+    }
+        if(grid == vector<int> // Diamond Chestplate
+                {36, 0, 36,
+                36, 36, 36,
+                36, 36, 36}){
+            result.first = instantiator->getItemFromNumber(68);
+            result.second = 1;
+    }
+        if(grid == vector<int> // Diamond leggings
+                {36, 36, 36,
+                36, 0, 36,
+                36, 0, 36}){
+            result.first = instantiator->getItemFromNumber(72);
+            result.second = 1;
+    }
+        if(grid == vector<int> // Diamond Boots
+                {0, 0, 0,
+                36, 0, 36,
+                36, 0, 36}){
+            result.first = instantiator->getItemFromNumber(76);
+            result.second = 1;
+    }       
+    // Gold Armor
+        if(grid == vector<int> //Diamond Helmet
+            {35, 35, 35,
+            35, 0, 35,
+            0, 0, 0}){
+        result.first = instantiator->getItemFromNumber(65);
+        result.second = 1;
+    }
+    if(grid == vector<int> // Diamond Chestplate
+            {35, 0, 35,
+            35, 35, 35,
+            35, 35, 35}){
+        result.first = instantiator->getItemFromNumber(69);
+        result.second = 1;
+    }
+    if(grid == vector<int> // Diamond leggings
+            {35, 36, 35,
+            35, 0, 35,
+            35, 0, 35}){
+        result.first = instantiator->getItemFromNumber(73);
+        result.second = 1;
+    }
+    if(grid == vector<int> // Diamond Boots
+            {0, 0, 0,
+            35, 0, 35,
+            35, 0, 35}){
+        result.first = instantiator->getItemFromNumber(77);
+        result.second = 1;
+    }   
         return result;    
 
 }

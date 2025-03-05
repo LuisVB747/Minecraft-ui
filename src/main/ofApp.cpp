@@ -7,6 +7,7 @@ void ofApp::setup() {
     this->craftingState = new CraftingState(player,instantiator);
     this->furnaceState = new FurnaceState(player,instantiator);
     this->generatorState= new GeneratorState(player,instantiator);
+    this->armorState = new ArmorState(player, instantiator);
 
     this->relaxingMusic.load("audio/miceOnVenus.mp3");
     this->relaxingMusic.play();
@@ -51,6 +52,9 @@ void ofApp::mousePressed(int x, int y, int button) {
                 else if (stateButton.getTargetState() == "generator") {
                     this->currentState = generatorState;
                 }
+                else if (stateButton.getTargetState() == "Armor") {
+                    this->currentState = armorState;
+                }
                 stateButton.playSoundEffect();
             }
         }
@@ -67,6 +71,8 @@ void ofApp::keyPressed(int key){
         this->player->addItem(instantiator->getItemFromNumber(40), 5);
         this->player->addItem(instantiator->getItemFromNumber(41), 3);
         this->player->addItem(instantiator->getItemFromNumber(37), 1);
+        this->player->addItem(instantiator->getItemFromNumber(62), 1);
+
 }
 if (key == 'E' || key == 'e') {  // Check if 'E' or 'e' is pressed
     this->player->addItem(instantiator->getItemFromNumber(50), 64);
