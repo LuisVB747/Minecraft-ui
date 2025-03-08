@@ -1,93 +1,132 @@
 #include "ofApp.h"
+
 //--------------------------------------------------------------
 void ofApp::setup() {
     this->instantiator = new ItemHandler();
     this->player = new Player();
     this->chestState = new ChestState(player);
-    this->craftingState = new CraftingState(player,instantiator);
-    this->furnaceState = new FurnaceState(player,instantiator);
-    this->generatorState= new GeneratorState(player,instantiator);
+    this->craftingState = new CraftingState(player, instantiator);
+    this->furnaceState = new FurnaceState(player, instantiator);
+    this->generatorState = new GeneratorState(player, instantiator);
     this->armorState = new ArmorState(player, instantiator);
+    this->worldState = new WorldState(player, instantiator);
 
     this->relaxingMusic.load("audio/miceOnVenus.mp3");
     this->relaxingMusic.play();
 
     giveItems();
     this->currentState = chestState;
+
+
 }
 
-/**
- * Handles mouse press events and manages state transitions.
- * 
- * This method is called whenever a mouse button is pressed. It delegates the event to the current state's
- * mousePressed method and checks if the left mouse button (button 0) was pressed. If so, it iterates through
- * the StateButtons and checks if any button was pressed. If a button is pressed, it changes the current state
- * to the target state of the button and plays the button's sound effect.
- * 
- * Basics of the state machine:
- * - The state machine consists of different states (e.g., "chest", "crafting", "furnace").
- * - Transitions between states occur based on user interactions with StateButton objects.
- * - Each state can have its own behavior and actions.
- * - The current state determines the system's behavior at any given time.
- * 
- * @param x The x-coordinate of the mouse cursor.
- * @param y The y-coordinate of the mouse cursor.
- * @param button The mouse button that was pressed (0 for left button, 2 for right button).
- */
+//--------------------------------------------------------------
+void ofApp::update() {
+    if (!relaxingMusic.isPlaying()) relaxingMusic.play();
+    currentState->update();
+}
+
+//--------------------------------------------------------------
+void ofApp::draw() {
+
+
+    // Draw the current state (e.g., chest, crafting, furnace)
+    currentState->draw();
+}
+
+//--------------------------------------------------------------
+void ofApp::setColor(const ofColor& color) {
+    glColor3ub(color.r, color.g, color.b); // Set the current drawing color
+}
+
+//--------------------------------------------------------------
+void ofApp::drawCube(float x, float y, float z, float size) {
+//     float halfSize = size / 2.0f;
+
+//     // Define the 8 vertices of the cube
+//     float vertices[8][3] = {
+//         {x - halfSize, y - halfSize, z - halfSize},
+//         {x + halfSize, y - halfSize, z - halfSize},
+//         {x + halfSize, y + halfSize, z - halfSize},
+//         {x - halfSize, y + halfSize, z - halfSize},
+//         {x - halfSize, y - halfSize, z + halfSize},
+//         {x + halfSize, y - halfSize, z + halfSize},
+//         {x + halfSize, y + halfSize, z + halfSize},
+//         {x - halfSize, y + halfSize, z + halfSize}
+//     };
+
+//     // Define the 6 faces of the cube using the vertices
+//     int faces[6][4] = {
+//         {0, 1, 2, 3}, // Front face
+//         {1, 5, 6, 2}, // Right face
+//         {5, 4, 7, 6}, // Back face
+//         {4, 0, 3, 7}, // Left face
+//         {3, 2, 6, 7}, // Top face
+//         {4, 5, 1, 0}  // Bottom face
+//     };
+
+//     // Draw each face of the cube
+//     glBegin(GL_QUADS);
+//     for (int i = 0; i < 6; ++i) {
+//         for (int j = 0; j < 4; ++j) {
+//             glVertex3fv(vertices[faces[i][j]]);
+//         }
+//     }
+//     glEnd();
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseMoved(int x, int y) {
+    currentState->mouseMoved(x, y);
+}
+
+//--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
-    currentState->mousePressed(x,y,button);
+    currentState->mousePressed(x, y, button);
     if (button == 0) {
         // Iterate through StateButtons
         for (auto stateButton : player->getStateButtons()) {
-            if (stateButton.onPress(x,y)) {
+            if (stateButton.onPress(x, y)) {
                 if (stateButton.getTargetState() == "chest") {
                     this->currentState = chestState;
-                }
-                else if (stateButton.getTargetState() == "crafting") {
+                } else if (stateButton.getTargetState() == "crafting") {
                     this->currentState = craftingState;
-                }
-                else if (stateButton.getTargetState() == "furnace") {
+                } else if (stateButton.getTargetState() == "furnace") {
                     this->currentState = furnaceState;
-                }
-                else if (stateButton.getTargetState() == "generator") {
+                } else if (stateButton.getTargetState() == "generator") {
                     this->currentState = generatorState;
-                }
-                else if (stateButton.getTargetState() == "Armor") {
+                } else if (stateButton.getTargetState() == "Armor") {
                     this->currentState = armorState;
+                } else if(stateButton.getTargetState() == "world"){
+                    this->currentState = worldState;
                 }
                 stateButton.playSoundEffect();
             }
         }
     }
 }
-void ofApp::update() { 
-    if (!relaxingMusic.isPlaying()) relaxingMusic.play();
-        currentState->update();
-    }
-void ofApp::draw() { currentState->draw();}
-void ofApp::mouseMoved(int x, int y) { currentState->mouseMoved(x,y); }
-void ofApp::keyPressed(int key){
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key) {
     if (key == 'B' || key == 'b') {  // Check if 'B' or 'b' is pressed
         this->player->addItem(instantiator->getItemFromNumber(40), 5);
         this->player->addItem(instantiator->getItemFromNumber(41), 3);
         this->player->addItem(instantiator->getItemFromNumber(37), 1);
         this->player->addItem(instantiator->getItemFromNumber(62), 1);
-
-}
-if (key == 'E' || key == 'e') {  // Check if 'E' or 'e' is pressed
-    this->player->addItem(instantiator->getItemFromNumber(50), 64);
-    this->player->addItem(instantiator->getItemFromNumber(42), 5);
-    this->player->addItem(instantiator->getItemFromNumber(18), 1);
-    this->player->addItem(instantiator->getItemFromNumber(8), 1);
-    this->player->addItem(instantiator->getItemFromNumber(23), 1);
-    this->player->addItem(instantiator->getItemFromNumber(13), 1);
-    this->player->addItem(instantiator->getItemFromNumber(28), 1);
-
-}
- { currentState->keyPressed(key); }
+    }
+    if (key == 'E' || key == 'e') {  // Check if 'E' or 'e' is pressed
+        this->player->addItem(instantiator->getItemFromNumber(50), 64);
+        this->player->addItem(instantiator->getItemFromNumber(42), 5);
+        this->player->addItem(instantiator->getItemFromNumber(18), 1);
+        this->player->addItem(instantiator->getItemFromNumber(8), 1);
+        this->player->addItem(instantiator->getItemFromNumber(23), 1);
+        this->player->addItem(instantiator->getItemFromNumber(13), 1);
+        this->player->addItem(instantiator->getItemFromNumber(28), 1);
+    }
+    currentState->keyPressed(key);
 }
 
-// Helper function that gives the player, or the chest, items.
+//--------------------------------------------------------------
 void ofApp::giveItems() {
     this->player->addItem(instantiator->getItemFromNumber(55), 1, 26);
     this->chestState->addItem(instantiator->getItemFromNumber(2), 4);
@@ -96,16 +135,7 @@ void ofApp::giveItems() {
     this->chestState->addItem(instantiator->getItemFromNumber(15), 1);
     this->chestState->addItem(instantiator->getItemFromNumber(20), 1);
     this->chestState->addItem(instantiator->getItemFromNumber(25), 1);
-
-
-    // Testing
-    // this->chestState->addItem(instantiator->getItemFromNumber(40), 6);
-    // this->chestState->addItem(instantiator->getItemFromNumber(37), 6);
-    // this->chestState->addItem(instantiator->getItemFromNumber(41), 6);
-
 }
-
-
 
 //------------------UNUSED--------------------------------------
 void ofApp::keyReleased(int key) {}
