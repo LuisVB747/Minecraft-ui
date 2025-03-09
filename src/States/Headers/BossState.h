@@ -8,7 +8,7 @@
  */
 class BossState: public State {
     private:
-
+        ItemHandler* instantiator; // pointer to the item
         ItemContainer SwordContainer; ///< Container that holds the Attacking item.
         ItemContainer ShieldContainer; ///<  Container that holds the Defensive item.
         ItemContainer FoodContainer; ///< Container that holds the healing item.
@@ -26,51 +26,35 @@ class BossState: public State {
 
         BossState(Player* player, ItemHandler* instantiator);
 
+        void equipTools(Item newItem);
+
+
+        bool canEquip(); 
+        
         // Getters
 
         /**
          * @brief Gets the current boss health.
          * @return The current boss health.
          */
-        int getBossHealth(){return this->bossHealth;}
+        int getBossHealth();//return this->bossHealth;}
 
         /**
          * @brief Gets the current boss attack damage.
          * @return The current boss attack damage.
          */
-        int getBossDamage(){return this->bossDamage;}
+        int getBossDamage();
 
         /**
          * @brief Gets the current boss attack accuracy.
          * @return The current boss accuracy.
          */
-        int getBossAccuracy(){return this->bossAccuracy;}
-
-
-        // Setters
-
-        /**
-         * @brief Sets the boss health 
-         * @param bossHealth The bosses health
-        */
-        void setBossHealth(int bossHealth){this->bossHealth = bossHealth;}
-
-        /**
-         * @brief Sets the boss attack damage 
-         * @param bossDamage The bosses attack damage
-        */
-        void setBossDamage(int bossDamage){this->bossDamage = bossDamage;}
-
-        /**
-         * @brief Sets the boss attack accuracy 
-         * @param bossAccuracy The bosses attack accuracy
-        */
-        void setBossAccuracy(int bossAccuracy){this->bossAccuracy = bossAccuracy;}
+        int getBossAccuracy();
 
          /**
          * @brief Updates the state. Mandatory unused implementation.
          */
-        void update(){};
+        void update();
 
         /**
          * @brief Draws the furnace state on the screen.
@@ -96,7 +80,7 @@ class BossState: public State {
          * @brief Handles key press events. Mandatory unused implementation.
          * @param key The key that was pressed.
          */
-        void keyPressed(int key) {};
+        void keyPressed(int key);
 
 
         

@@ -8,6 +8,7 @@ void ofApp::setup() {
     this->furnaceState = new FurnaceState(player,instantiator);
     this->generatorState= new GeneratorState(player,instantiator);
     this->armorState = new ArmorState(player, instantiator);
+    this->bossState = new BossState(player, instantiator);
 
     this->relaxingMusic.load("audio/miceOnVenus.mp3");
     this->relaxingMusic.play();
@@ -55,6 +56,9 @@ void ofApp::mousePressed(int x, int y, int button) {
                 else if (stateButton.getTargetState() == "Armor") {
                     this->currentState = armorState;
                 }
+                else if(stateButton.getTargetState() == "boss"){
+                    this->currentState = bossState;
+                }
                 stateButton.playSoundEffect();
             }
         }
@@ -97,8 +101,23 @@ void ofApp::giveItems() {
     this->chestState->addItem(instantiator->getItemFromNumber(20), 1);
     this->chestState->addItem(instantiator->getItemFromNumber(25), 1);
 
-
     // Testing
+    this->player->addItem(instantiator->getItemFromNumber(62), 1);
+    this->player->addItem(instantiator->getItemFromNumber(63), 1);
+    this->player->addItem(instantiator->getItemFromNumber(66), 1);
+    this->player->addItem(instantiator->getItemFromNumber(67), 1);
+    this->player->addItem(instantiator->getItemFromNumber(70), 1);
+    this->player->addItem(instantiator->getItemFromNumber(71), 1);
+    this->player->addItem(instantiator->getItemFromNumber(74), 1);
+    this->player->addItem(instantiator->getItemFromNumber(75), 1);
+    // this->chestState->addItem(instantiator->getItemFromNumber(79), 1);
+    // this->chestState->addItem(instantiator->getItemFromNumber(44), 1);
+    // this->chestState->addItem(instantiator->getItemFromNumber(46), 1);
+    // this->chestState->addItem(instantiator->getItemFromNumber(52), 1);
+    // this->chestState->addItem(instantiator->getItemFromNumber(53), 1);
+    // this->chestState->addItem(instantiator->getItemFromNumber(54), 1);
+    // this->chestState->addItem(instantiator->getItemFromNumber(55), 1);
+    // this->chestState->addItem(instantiator->getItemFromNumber(56), 1);
     // this->chestState->addItem(instantiator->getItemFromNumber(40), 6);
     // this->chestState->addItem(instantiator->getItemFromNumber(37), 6);
     // this->chestState->addItem(instantiator->getItemFromNumber(41), 6);

@@ -7,6 +7,7 @@
 #include "FurnaceState.h"
 #include "GeneratorState.h"
 #include "ArmorState.h"
+#include "BossState.h"
 using namespace std;
 
 /**
@@ -23,6 +24,7 @@ class ofApp : public ofBaseApp {
         FurnaceState* furnaceState; ///< Pointer to the furnace state.
         GeneratorState* generatorState; ///< Pointer to the generator state.
         ArmorState* armorState; ///<Pointer to the armor state
+        BossState* bossState; ///< Pointer to the boss state
 
         ofSoundPlayer relaxingMusic; ///< Sound player for background music.
 
