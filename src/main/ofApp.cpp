@@ -41,38 +41,7 @@ void ofApp::setColor(const ofColor& color) {
 
 //--------------------------------------------------------------
 void ofApp::drawCube(float x, float y, float z, float size) {
-//     float halfSize = size / 2.0f;
 
-//     // Define the 8 vertices of the cube
-//     float vertices[8][3] = {
-//         {x - halfSize, y - halfSize, z - halfSize},
-//         {x + halfSize, y - halfSize, z - halfSize},
-//         {x + halfSize, y + halfSize, z - halfSize},
-//         {x - halfSize, y + halfSize, z - halfSize},
-//         {x - halfSize, y - halfSize, z + halfSize},
-//         {x + halfSize, y - halfSize, z + halfSize},
-//         {x + halfSize, y + halfSize, z + halfSize},
-//         {x - halfSize, y + halfSize, z + halfSize}
-//     };
-
-//     // Define the 6 faces of the cube using the vertices
-//     int faces[6][4] = {
-//         {0, 1, 2, 3}, // Front face
-//         {1, 5, 6, 2}, // Right face
-//         {5, 4, 7, 6}, // Back face
-//         {4, 0, 3, 7}, // Left face
-//         {3, 2, 6, 7}, // Top face
-//         {4, 5, 1, 0}  // Bottom face
-//     };
-
-//     // Draw each face of the cube
-//     glBegin(GL_QUADS);
-//     for (int i = 0; i < 6; ++i) {
-//         for (int j = 0; j < 4; ++j) {
-//             glVertex3fv(vertices[faces[i][j]]);
-//         }
-//     }
-//     glEnd();
 }
 
 //--------------------------------------------------------------
@@ -122,6 +91,10 @@ void ofApp::keyPressed(int key) {
         this->player->addItem(instantiator->getItemFromNumber(23), 1);
         this->player->addItem(instantiator->getItemFromNumber(13), 1);
         this->player->addItem(instantiator->getItemFromNumber(28), 1);
+    }
+    if(key == 'i'|| key == 'I'){
+        this->currentState = craftingState;
+        ofShowCursor();
     }
     currentState->keyPressed(key);
 }

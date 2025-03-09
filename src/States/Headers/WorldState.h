@@ -2,23 +2,16 @@
 #include "State.h"
 #include "Chunk.h"
 #include "ItemHandler.h"
-#include "ofEasyCam.h" // Include the ofEasyCam header
+#include "Camera.h"
 
 class WorldState : public State {
 private:
     std::vector<std::vector<std::vector<Chunk>>> world; // 5x5x5 grid of chunks
     ItemHandler* itemHandler; // Pointer to the item handler
-    ofEasyCam cam; // Declare the camera object
+    Camera camera; // Camera object
     ofVec3f playerPosition; // Player's position in the world
-    float playerYaw; // Player's horizontal rotation (left/right)
-    float playerPitch; // Player's vertical rotation (up/down)
-    float camAccel;
-    float generalAccel;
-    int lastx;
-    int lasty;
-    int currx;
-    int curry;
-
+    bool isMouseHidden; // Track if the mouse is hidden
+    float gravity;
 
 public:
     /**
@@ -37,6 +30,8 @@ public:
      * @brief Draws the state.
      */
     void draw() override;
+    
+    bool getIsMouseHidden(){return this->isMouseHidden;}
 
     /**
      * @brief Handles key press events.
@@ -82,18 +77,18 @@ private:
      */
     void removeBlock(int x, int y, int z);
 
-    /** 
-    * @brief Sets the current drawing color.
-    * @param color The color to set.
-    */
-   void setColor(const Color& color);
+    /**
+     * @brief Sets the current drawing color.
+     * @param color The color to set.
+     */
+    void setColor(const Color& color);
 
-   /**
-    * @brief Draws a cube at the specified position.
-    * @param x The x-coordinate of the cube's center.
-    * @param y The y-coordinate of the cube's center.
-    * @param z The z-coordinate of the cube's center.
-    * @param size The size of the cube.
-    */
-   void drawCube(float x, float y, float z, float size);
+    /**
+     * @brief Draws a cube at the specified position.
+     * @param x The x-coordinate of the cube's center.
+     * @param y The y-coordinate of the cube's center.
+     * @param z The z-coordinate of the cube's center.
+     * @param size The size of the cube.
+     */
+    void drawCube(float x, float y, float z, float size);
 };
