@@ -3,10 +3,10 @@
 ArmorState :: ArmorState(Player* player, ItemHandler* instantiator) : State(player){
     this->instantiator = instantiator; 
     this->background.load("images/states/armor.png");
-    this->Helmet = ItemContainer(323,50);
-    this->Chestplate = ItemContainer(323, 120);
-    this->Leggins = ItemContainer(323, 190);
-    this-> Boots = ItemContainer(323, 260);
+    this->Helmet = ItemContainer(323,40);
+    this->Chestplate = ItemContainer(323, 110);
+    this->Leggins = ItemContainer(323, 184);
+    this-> Boots = ItemContainer(323, 258);
     
 };
 
