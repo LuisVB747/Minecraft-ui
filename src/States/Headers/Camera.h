@@ -78,4 +78,10 @@ public:
      * @param distance The new distance.
      */
     void setDistance(float distance);
+
+        /**
+     * @brief Gets the forward direction vector of the camera.
+     * @return The forward direction vector.
+     */
+    ofVec3f getForwardDirection() const;
 };

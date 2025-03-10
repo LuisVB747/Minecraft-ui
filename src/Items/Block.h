@@ -46,4 +46,5 @@ void setType(int type);
  * @param color The new block color.
  */
 void setColor(Color color);
+
 };

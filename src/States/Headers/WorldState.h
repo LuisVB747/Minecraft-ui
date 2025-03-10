@@ -13,6 +13,22 @@ private:
     bool isMouseHidden; // Track if the mouse is hidden
     float gravity;
 
+        // Reference to the player's inventory
+     std::vector<ItemContainer>& inventory; // Add this line
+    const int WORLD_SIZE_X = 5 * 16; // 5 chunks * 16 blocks
+    const int WORLD_SIZE_Z = 5 * 16; // 5 chunks * 16 blocks
+    const int WORLD_MIN_Y = 0;       // Minimum Y level (e.g., bedrock)
+    const int WORLD_MAX_Y = 256;     // Maximum Y level (e.g., sky limit)
+     /**
+     * @brief Performs raycasting to determine which block the player is looking at.
+     * @param start The starting point of the ray (camera position).
+     * @param end The end point of the ray (camera position + direction * distance).
+     * @param blockX The x-coordinate of the block being looked at (output).
+     * @param blockY The y-coordinate of the block being looked at (output).
+     * @param blockZ The z-coordinate of the block being looked at (output).
+     * @return True if a solid block is found, false otherwise.
+     */
+    bool raycast(const ofVec3f& start, const ofVec3f& end, int& blockX, int& blockY, int& blockZ);
 public:
     /**
      * @brief Constructs a WorldState object.
@@ -20,6 +36,8 @@ public:
      * @param itemHandler Pointer to the item handler.
      */
     WorldState(Player* player, ItemHandler* itemHandler);
+
+    Block getBlockAt(int x, int y, int z) const; //gets block at xzy coordinates
 
     /**
      * @brief Updates the state.
@@ -61,6 +79,11 @@ private:
     void loadWorld();
 
     /**
+     * @brief checks if the player is inside the world.
+     */
+    bool isWithinWorldBounds(float x, float y, float z) const;
+
+    /**
      * @brief Places a block at the specified position.
      * @param x The x-coordinate of the block.
      * @param y The y-coordinate of the block.
@@ -91,4 +114,20 @@ private:
      * @param size The size of the cube.
      */
     void drawCube(float x, float y, float z, float size);
+
+
+    /**
+     * @brief check if a block is solid at (x y z)
+     * @param x The x coordinates
+     * @param y The y coordinates
+     * @param z The z coordinates
+     */
+    bool isColliding(float x, float y, float z);
+
+    void drawCrosshair();
+
+    // Check for collisions in all directions
+    void checkCollisions();
+
+    bool isPlayerOnGround();
 };
