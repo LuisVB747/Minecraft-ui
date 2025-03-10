@@ -129,6 +129,8 @@ class ItemHandler {
             itemList.push_back(Item(77, 1, 0, getSpriteFromSheet(7, 13), "Gold Boots"));
 
             itemList.push_back(Item(78, 1, 0, getSpriteFromSheet(12, 15), "Leather"));
+            // Shield 
+            itemList.push_back(Item(79, 1, 0, getSpriteFromSheet(16, 10), "Shield"));
 
         }
 };

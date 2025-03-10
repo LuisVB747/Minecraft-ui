@@ -3,10 +3,10 @@
 ArmorState :: ArmorState(Player* player, ItemHandler* instantiator) : State(player){
     this->instantiator = instantiator; 
     this->background.load("images/states/armor.png");
-    this->Helmet = ItemContainer(323,50);
-    this->Chestplate = ItemContainer(323, 120);
-    this->Leggins = ItemContainer(323, 190);
-    this-> Boots = ItemContainer(323, 260);
+    this->Helmet = ItemContainer(323,40);
+    this->Chestplate = ItemContainer(323, 110);
+    this->Leggins = ItemContainer(323, 184);
+    this-> Boots = ItemContainer(323, 258);
     
 };
 
@@ -16,13 +16,13 @@ void ArmorState::equipArmor(Item newItem) {
     if (itemName.find("helmet") != std::string::npos) {
         this->Helmet.setCurrentItem(newItem);
     } 
-    else if (itemName.find("chestplate") != std::string::npos) {
+    else if (itemName.find("Chestplate") != std::string::npos) {
         this->Chestplate.setCurrentItem(newItem);
     } 
-    else if (itemName.find("leggings") != std::string::npos) {
+    else if (itemName.find("Leggings") != std::string::npos) {
         this->Leggins.setCurrentItem(newItem);
     } 
-    else if (itemName.find("boots") != std::string::npos) {
+    else if (itemName.find("Boots") != std::string::npos) {
         this->Boots.setCurrentItem(newItem);
     } 
 }
@@ -30,9 +30,9 @@ void ArmorState::equipArmor(Item newItem) {
 bool ArmorState::canEquip() {
     Item cursorItem = getPlayer()->getCursorContainer().getCurrentItem();
     if(cursorItem.getName().find("helmet") != std::string::npos || 
-    cursorItem.getName().find("chestplate") != std::string::npos || 
-    cursorItem.getName().find("leggings") != std::string::npos || 
-    cursorItem.getName().find("boots") != std::string::npos){
+    cursorItem.getName().find("Chestplate") != std::string::npos || 
+    cursorItem.getName().find("Leggings") != std::string::npos || 
+    cursorItem.getName().find("Boots") != std::string::npos){
         return true;
     }
     else{
@@ -100,7 +100,7 @@ void ArmorState::mousePressed(int x, int y, int button) {
                 cursorContainer.setCurrentItem(Chestplate.getCurrentItem());
                 cursorContainer.setItemCount(1);
                 Chestplate.empty(); // Clear the chestplate slot
-            } else if (cursorItem.getName().find("chestplate") != std::string::npos) {
+            } else if (cursorItem.getName().find("Chestplate") != std::string::npos) {
                 // Equip: Move the cursor item to the chestplate slot
                 equipArmor(cursorItem);
                 cursorContainer.empty(); // Clear the cursor
@@ -111,7 +111,7 @@ void ArmorState::mousePressed(int x, int y, int button) {
                 cursorContainer.setCurrentItem(Leggins.getCurrentItem());
                 cursorContainer.setItemCount(1);
                 Leggins.empty(); // Clear the leggings slot
-            } else if (cursorItem.getName().find("leggings") != std::string::npos) {
+            } else if (cursorItem.getName().find("Leggings") != std::string::npos) {
                 // Equip: Move the cursor item to the leggings slot
                 equipArmor(cursorItem);
                 cursorContainer.empty(); // Clear the cursor
@@ -122,7 +122,7 @@ void ArmorState::mousePressed(int x, int y, int button) {
                 cursorContainer.setCurrentItem(Boots.getCurrentItem());
                 cursorContainer.setItemCount(1);
                 Boots.empty(); // Clear the boots slot
-            } else if (cursorItem.getName().find("boots") != std::string::npos) {
+            } else if (cursorItem.getName().find("Boots") != std::string::npos) {
                 // Equip: Move the cursor item to the boots slot
                 equipArmor(cursorItem);
                 cursorContainer.empty(); // Clear the cursor

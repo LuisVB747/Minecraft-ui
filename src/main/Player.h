@@ -50,6 +50,7 @@ class Player {
             StateButton worldStateButton{"world", HORZ_ALIGN + (6 * DISTANCE_BETWEEN_BUTTONS), VERT_ALIGN};
 
 
+            StateButton bossStateButton{"boss", HORZ_ALIGN + (5 * DISTANCE_BETWEEN_BUTTONS), VERT_ALIGN};
 
             this->buttons.push_back(chestStateButton);
             this->buttons.push_back(craftingStateButton);
@@ -58,6 +59,7 @@ class Player {
             this->buttons.push_back(armorStateButton);
             this->buttons.push_back(worldStateButton);
 
+            this->buttons.push_back(bossStateButton);
         }
 
         /**

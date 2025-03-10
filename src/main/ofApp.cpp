@@ -9,7 +9,6 @@ void ofApp::setup() {
     this->furnaceState = new FurnaceState(player, instantiator);
     this->generatorState = new GeneratorState(player, instantiator);
     this->armorState = new ArmorState(player, instantiator);
-    this->worldState = new WorldState(player, instantiator);
 
     this->relaxingMusic.load("audio/miceOnVenus.mp3");
     this->relaxingMusic.play();
@@ -69,6 +68,9 @@ void ofApp::mousePressed(int x, int y, int button) {
                 } else if(stateButton.getTargetState() == "world"){
                     this->currentState = worldState;
                 }
+                else if(stateButton.getTargetState() == "boss"){
+                    this->currentState = bossState;
+                }
                 stateButton.playSoundEffect();
             }
         }
@@ -109,18 +111,16 @@ void ofApp::giveItems() {
     this->chestState->addItem(instantiator->getItemFromNumber(15), 1);
     this->chestState->addItem(instantiator->getItemFromNumber(20), 1);
     this->chestState->addItem(instantiator->getItemFromNumber(25), 1);
+
+
+    // Testing
+    // this->chestState->addItem(instantiator->getItemFromNumber(40), 6);
+    // this->chestState->addItem(instantiator->getItemFromNumber(37), 6);
+    // this->chestState->addItem(instantiator->getItemFromNumber(41), 6);
+
 }
 
-void ofApp::resetOpenGLStates() {
-    // // Reset OpenGL states to defaults
-    // glMatrixMode(GL_PROJECTION);
-    // glLoadIdentity();
-    // glMatrixMode(GL_MODELVIEW);
-    // glLoadIdentity();
-    // glEnable(GL_DEPTH_TEST); // Re-enable depth testing (if disabled)
-    // ofSetColor(255, 255, 255); // Reset color to white
-    // ofFill(); // Reset fill mode
-}
+
 
 //------------------UNUSED--------------------------------------
 void ofApp::keyReleased(int key) {}
