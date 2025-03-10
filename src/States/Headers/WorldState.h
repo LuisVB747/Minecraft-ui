@@ -29,6 +29,9 @@ private:
      * @return True if a solid block is found, false otherwise.
      */
     bool raycast(const ofVec3f& start, const ofVec3f& end, int& blockX, int& blockY, int& blockZ);
+    int selectedHotbarSlot; // Currently selected hotbar slot (0-8)
+
+
 public:
     /**
      * @brief Constructs a WorldState object.
@@ -77,6 +80,11 @@ private:
      * @brief Loads or generates the 5x5x5 chunk world.
      */
     void loadWorld();
+    /**
+     * @brief Draws the hotbar (bottom row of the inventory).
+     */
+    void drawHotbar();
+    
 
     /**
      * @brief checks if the player is inside the world.

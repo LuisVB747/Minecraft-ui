@@ -80,7 +80,8 @@ private:
      * @param color The color to set.
      */
     void setColor(const ofColor& color);
-
+    
+    void resetOpenGLStates();
     /**
      * @brief Draws a cube at the specified position.
      * @param x The x-coordinate of the cube's center.

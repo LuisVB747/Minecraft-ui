@@ -92,9 +92,10 @@ void ofApp::keyPressed(int key) {
         this->player->addItem(instantiator->getItemFromNumber(13), 1);
         this->player->addItem(instantiator->getItemFromNumber(28), 1);
     }
-    if(key == 'i'|| key == 'I'){
-        this->currentState = craftingState;
-        ofShowCursor();
+    if (key == 'i' || key == 'I') { // Exit WorldState and return to ChestState
+        resetOpenGLStates(); // Reset OpenGL states
+        this->currentState = chestState; // Transition back to ChestState
+        ofShowCursor(); // Show the cursor
     }
     currentState->keyPressed(key);
 }
@@ -108,6 +109,17 @@ void ofApp::giveItems() {
     this->chestState->addItem(instantiator->getItemFromNumber(15), 1);
     this->chestState->addItem(instantiator->getItemFromNumber(20), 1);
     this->chestState->addItem(instantiator->getItemFromNumber(25), 1);
+}
+
+void ofApp::resetOpenGLStates() {
+    // // Reset OpenGL states to defaults
+    // glMatrixMode(GL_PROJECTION);
+    // glLoadIdentity();
+    // glMatrixMode(GL_MODELVIEW);
+    // glLoadIdentity();
+    // glEnable(GL_DEPTH_TEST); // Re-enable depth testing (if disabled)
+    // ofSetColor(255, 255, 255); // Reset color to white
+    // ofFill(); // Reset fill mode
 }
 
 //------------------UNUSED--------------------------------------

@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h> // Include GLFW for input handling
 
 WorldState::WorldState(Player* player, ItemHandler* itemHandler)
-    : State(player), inventory(player->getInventory()) {
+    : State(player), inventory(player->getInventory()), selectedHotbarSlot(0)  {
     this->itemHandler = itemHandler;
     isMouseHidden = false; // Track mouse visibility
     gravity = 0.1; //constant for the gravity
@@ -138,6 +138,7 @@ void WorldState::draw() {
     }
     drawCrosshair();
     ofDisableDepthTest(); // Disable depth testing
+    // drawHotbar();
 }
 
 void WorldState::keyPressed(int key) {
@@ -147,7 +148,9 @@ void WorldState::keyPressed(int key) {
     ofVec3f forward = camera.getForwardDirection();
     ofVec3f right = forward.getCrossed(ofVec3f(0, 1, 0)).normalize(); // Right vector is perpendicular to forward and world up
 
-    // Calculate the new position based on input
+    // if (key >= '1' && key <= '9') {
+    //     selectedHotbarSlot = key - '1';} // Convert key to slot index (0-8)
+    // // Calculate the new position based on input
     ofVec3f newPosition = playerPosition;
 
     if (key == 'w' || key == 'W') { // Move forward
@@ -175,7 +178,9 @@ void WorldState::keyPressed(int key) {
     if (!isColliding(newPosition.x, newPosition.y, newPosition.z)) {
         playerPosition = newPosition; // Update player position
     }
-
+    if(!isPlayerOnGround()){
+        newPosition.y -= gravity;
+    }
     checkCollisions();
 }
 
@@ -257,7 +262,7 @@ void WorldState::checkCollisions(){
     }
     
     bool WorldState::raycast(const ofVec3f& start, const ofVec3f& end, int& blockX, int& blockY, int& blockZ) {
-        float stepSize = 0.1f; // Smaller step size = more accurate raycasting
+        float stepSize = 0.01f; // Smaller step size = more accurate raycasting
         ofVec3f direction = (end - start).getNormalized();
         ofVec3f current = start;
     
@@ -308,6 +313,75 @@ void WorldState::mouseMoved(int x, int y) {
         glfwSetCursorPos(window, ofGetWidth() / 2, ofGetHeight() / 2);
     }
 }
+void WorldState::drawHotbar() {
+    // Switch to orthographic projection for 2D rendering
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix(); // Save the current projection matrix
+    glLoadIdentity();
+    gluOrtho2D(0, ofGetWidth(), ofGetHeight(), 0); // Set up 2D orthographic projection
+
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix(); // Save the current model-view matrix
+    glLoadIdentity();
+
+    // Disable depth testing for 2D rendering
+    glDisable(GL_DEPTH_TEST);
+
+    const int HOTBAR_SLOTS = 9; // Number of slots in the hotbar
+    const int SLOT_SIZE = 64; // Size of each slot (in pixels)
+    const int HOTBAR_WIDTH = HOTBAR_SLOTS * SLOT_SIZE; // Total width of the hotbar
+    const int HOTBAR_HEIGHT = SLOT_SIZE; // Height of the hotbar
+
+    // Calculate the position of the hotbar (centered at the bottom of the screen)
+    int hotbarX = (ofGetWidth() - HOTBAR_WIDTH) / 2;
+    int hotbarY = ofGetHeight() - HOTBAR_HEIGHT - 10; // 10 pixels above the bottom
+
+    // Draw the hotbar background
+    ofSetColor(100, 100, 100); // Gray background
+    ofDrawRectangle(hotbarX, hotbarY, HOTBAR_WIDTH, HOTBAR_HEIGHT);
+
+    // Draw each slot in the hotbar
+    for (int i = 0; i < HOTBAR_SLOTS; ++i) {
+        int slotX = hotbarX + i * SLOT_SIZE;
+        int slotY = hotbarY;
+
+        // Draw the slot border
+        ofSetColor(0, 0, 0); // Black border
+        ofNoFill();
+        ofDrawRectangle(slotX, slotY, SLOT_SIZE, SLOT_SIZE);
+        ofFill();
+
+        // Draw the item in the slot (if any)
+        ItemContainer& slot = inventory[18 + i]; // Hotbar slots are 18-26
+        if (!slot.isEmpty()) {
+            ofImage itemSprite = slot.getCurrentItem().getSprite();
+            itemSprite.draw(slotX, slotY, SLOT_SIZE, SLOT_SIZE);
+
+            // Draw the item count (if greater than 1)
+            if (slot.getItemCount() > 1) {
+                ofSetColor(255, 255, 255); // White text
+                ofDrawBitmapString(ofToString(slot.getItemCount()), slotX + SLOT_SIZE - 20, slotY + SLOT_SIZE - 10);
+            }
+        }
+    }
+
+    // Draw the selected slot indicator
+    int selectedSlotX = hotbarX + selectedHotbarSlot * SLOT_SIZE;
+    ofSetColor(255, 255, 0); // Yellow border for selected slot
+    ofNoFill();
+    ofDrawRectangle(selectedSlotX, hotbarY, SLOT_SIZE, SLOT_SIZE);
+    ofFill();
+
+    // Restore the previous projection and model-view matrices
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix(); // Restore the previous projection matrix
+
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix(); // Restore the previous model-view matrix
+
+    // Re-enable depth testing for 3D rendering
+    glEnable(GL_DEPTH_TEST);
+}
 
 void WorldState::mousePressed(int x, int y, int button) {
     if (button == 0) { // Left click (break block)
@@ -321,33 +395,25 @@ void WorldState::mousePressed(int x, int y, int button) {
         if (raycast(rayStart, rayEnd, blockX, blockY, blockZ)) {
             removeBlock(blockX, blockY, blockZ); // Break the block
         }
-    }
-    else if (button == 2) { // Right click (place block)
-        // Get the selected block from the hotbar
-        int selectedSlot = 18; // Default to the first slot in the hotbar
-        for (int i = 18; i < 27; ++i) {
-            if (!inventory[i].isEmpty()) {
-                selectedSlot = i;
-                break;
+    } else if (button == 2) { // Right click (place block)
+        // Get the selected item from the hotbar
+        ItemContainer& selectedSlot = inventory[18 + selectedHotbarSlot];
+        if (!selectedSlot.isEmpty()) {
+            int blockType = selectedSlot.getCurrentItem().getItemNumber();
+
+            // Perform raycasting to determine where to place the block
+            ofVec3f rayStart = camera.getPosition();
+            ofVec3f rayDirection = camera.getForwardDirection();
+            ofVec3f rayEnd = rayStart + rayDirection * 10.0f; // Ray length of 10 units
+
+            // Perform raycasting to find the block being looked at
+            int blockX, blockY, blockZ;
+            if (raycast(rayStart, rayEnd, blockX, blockY, blockZ)) {
+                placeBlock(blockX, blockY, blockZ, Block(blockType)); // Place the block
             }
-        }
-
-        // Get the block type from the selected slot
-        int blockType = inventory[selectedSlot].getCurrentItem().getItemNumber();
-
-        // Perform raycasting to determine where to place the block
-        ofVec3f direction = camera.getForwardDirection(); // Implement this in Camera class
-        ofVec3f rayStart = camera.getPosition();
-        ofVec3f rayEnd = rayStart + direction * 10.0f; // Ray length of 10 units
-
-        // Perform raycasting to find the block being looked at
-        int blockX, blockY, blockZ;
-        if (raycast(rayStart, rayEnd, blockX, blockY, blockZ)) { // Implement raycast function
-            placeBlock(blockX, blockY, blockZ, Block(blockType)); // Place the block
         }
     }
 }
-
 void WorldState::loadWorld() {
     const int CHUNK_SIZE = 16;
     const int WORLD_SIZE = 5; // 5x5 chunks
