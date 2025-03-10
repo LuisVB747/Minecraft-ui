@@ -13,12 +13,25 @@ class BossState: public State {
         ItemContainer ShieldContainer; ///<  Container that holds the Defensive item.
         ItemContainer FoodContainer; ///< Container that holds the healing item.
         
-        vector<int> foodItems; ///< Holds the numbers of all food items that can heal you.
-
+        void calculateSwordDamage(const std::string& swordName); // Calculate the damage of the sword
+        void calculateHealing(const std::string& foodName); // Calculate the healing done by food
 
         int bossHealth; // Boss health
         int bossDamage; // Boss attack damage 
         int bossAccuracy; // Accuracy from boss' attacks
+
+        int playerHealth; // Player health
+        int playerDamage; // Player attack damage
+
+        int swordDamage; // Adding for sword damage
+        int foodHealing; // Adding for food healing
+
+        void damagePlayer(int bossDamage, int bossAccuracy); // Damage done to the player
+        void damageBoss(int playerDamage); // Damage done to the boss
+
+        void doHealing(int foodHealing); // Heals player when the button is pressed
+
+        
         
 
     public:
@@ -37,7 +50,7 @@ class BossState: public State {
          * @brief Gets the current boss health.
          * @return The current boss health.
          */
-        int getBossHealth();//return this->bossHealth;}
+        int getBossHealth();
 
         /**
          * @brief Gets the current boss attack damage.
@@ -50,6 +63,20 @@ class BossState: public State {
          * @return The current boss accuracy.
          */
         int getBossAccuracy();
+
+        /**
+         * @brief Gets the current player health.
+         * @return The current player health.
+         */
+        int getPlayerHealth();
+
+        /**
+         * @brief Gets the current player attack damage.
+         * @return The current player attack damage.
+         */
+        int getPlayerDamage();
+
+        
 
          /**
          * @brief Updates the state. Mandatory unused implementation.
