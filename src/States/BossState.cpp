@@ -3,7 +3,12 @@
 
 BossState::BossState(Player* player, ItemHandler* instantiator) : State(player){
     this->instantiator = instantiator;
+    // Images 
     this->background.load("images/states/boss.png");
+    this->halfHeart.load("images/sprites/half_heart.png");
+    this->emptyHeart.load("images/sprites/empty_heart.png");
+
+    // Containers
     this->SwordContainer = ItemContainer(176, 72);
     this->ShieldContainer = ItemContainer(176, 144);
     this->FoodContainer = ItemContainer(176,216);

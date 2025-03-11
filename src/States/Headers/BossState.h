@@ -12,6 +12,7 @@ class BossState: public State {
         ItemContainer SwordContainer; ///< Container that holds the Attacking item.
         ItemContainer ShieldContainer; ///<  Container that holds the Defensive item.
         ItemContainer FoodContainer; ///< Container that holds the healing item.
+ 
         
         void calculateSwordDamage(const std::string& swordName); // Calculate the damage of the sword
         void calculateHealing(const std::string& foodName); // Calculate the healing done by food
@@ -38,6 +39,10 @@ class BossState: public State {
 
 
         BossState(Player* player, ItemHandler* instantiator);
+
+        // Heart images 
+        ofImage halfHeart;
+        ofImage emptyHeart;
 
         void equipTools(Item newItem);
 
