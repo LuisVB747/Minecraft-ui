@@ -8,6 +8,11 @@
 #include "FurnaceState.h"
 #include "GeneratorState.h"
 #include "ArmorState.h"
+#include "WorldState.h"
+#include <GL/gl.h> // Include OpenGL headers
+#include <GL/glu.h> // Include GLU utilities (optional)
+
+#include "BossState.h"
 using namespace std;
 
 /**
@@ -15,15 +20,18 @@ using namespace std;
  * @brief Main application class that handles the game setup, update, and rendering.
  */
 class ofApp : public ofBaseApp {
-    public:
-        Player* player; ///< Pointer to the player object.
-        ItemHandler* instantiator; ///< Pointer to the item handler for item creation.
-        State* currentState; ///< Pointer to the current game state.
-        ChestState* chestState; ///< Pointer to the chest state.
-        CraftingState* craftingState; ///< Pointer to the crafting state.
-        FurnaceState* furnaceState; ///< Pointer to the furnace state.
-        GeneratorState* generatorState; ///< Pointer to the generator state.
-        ArmorState* armorState; ///<Pointer to the armor state
+public:
+    Player* player; ///< Pointer to the player object.
+    ItemHandler* instantiator; ///< Pointer to the item handler for item creation.
+    State* currentState; ///< Pointer to the current game state.
+    ChestState* chestState; ///< Pointer to the chest state.
+    CraftingState* craftingState; ///< Pointer to the crafting state.
+    FurnaceState* furnaceState; ///< Pointer to the furnace state.
+    GeneratorState* generatorState; ///< Pointer to the generator state.
+    ArmorState* armorState; ///< Pointer to the armor state.
+    WorldState* worldState; ///< Pointer to the world state.
+    BossState* bossState; ///< Pointer to the boss state
+
 
     ofSoundPlayer relaxingMusic; ///< Sound player for background music.
     ofEasyCam cam; ///< Camera for 3D navigation.
@@ -45,7 +53,8 @@ class ofApp : public ofBaseApp {
 
     /**
      * @brief Handles mouse movement events.
-     * @param x The x-coordinate of the mouse.
+     * @param x The x-coord
+     * inate of the mouse.
      * @param y The y-coordinate of the mouse.
      */
     void mouseMoved(int x, int y);

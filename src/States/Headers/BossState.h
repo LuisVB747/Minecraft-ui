@@ -25,6 +25,17 @@ class BossState: public State {
 
         int swordDamage; // Adding for sword damage
         int foodHealing; // Adding for food healing
+        int tickCounter;
+        enum TurnState {
+            WAITING_FOR_INPUT,
+            PLAYER_ATTACKING,
+            BOSS_ATTACKING,
+            TURN_TRANSITION,
+            GAME_OVER
+        };
+        TurnState currentTurn;
+        TurnState lastTurn;
+     
 
         void damagePlayer(int bossDamage, int bossAccuracy); // Damage done to the player
         void damageBoss(int playerDamage); // Damage done to the boss

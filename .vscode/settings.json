@@ -17,5 +17,6 @@
         "ratio": "cpp",
         "streambuf": "cpp",
         "*.inc": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "enabled"
 }
