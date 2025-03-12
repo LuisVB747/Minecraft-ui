@@ -46,6 +46,10 @@ class Player {
             StateButton furnaceStateButton{"furnace", HORZ_ALIGN + (2 * DISTANCE_BETWEEN_BUTTONS), VERT_ALIGN};
             StateButton generatorStateButton{"generator", HORZ_ALIGN + (3 * DISTANCE_BETWEEN_BUTTONS), VERT_ALIGN};
             StateButton armorStateButton{"Armor", HORZ_ALIGN + (4 * DISTANCE_BETWEEN_BUTTONS), VERT_ALIGN};
+
+            StateButton worldStateButton{"world", HORZ_ALIGN + (6 * DISTANCE_BETWEEN_BUTTONS), VERT_ALIGN};
+
+
             StateButton bossStateButton{"boss", HORZ_ALIGN + (5 * DISTANCE_BETWEEN_BUTTONS), VERT_ALIGN};
 
             this->buttons.push_back(chestStateButton);
@@ -53,6 +57,8 @@ class Player {
             this->buttons.push_back(furnaceStateButton);
             this->buttons.push_back(generatorStateButton);
             this->buttons.push_back(armorStateButton);
+            this->buttons.push_back(worldStateButton);
+
             this->buttons.push_back(bossStateButton);
         }
 
