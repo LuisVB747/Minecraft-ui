@@ -9,6 +9,8 @@ const int TURN_TRANSITION_DURATION = 30;    // Ticks for transition between turn
 BossState::BossState(Player* player, ItemHandler* instantiator) : State(player) {
     this->instantiator = instantiator;
     this->background.load("images/states/boss.png");
+    this->bossImage.load("images/sprites/ender.png");
+    this->bossDamageImage.load("images/sprites/ender_damaged.png");
     this->SwordContainer = ItemContainer(176, 72);
     this->ShieldContainer = ItemContainer(176, 144);
     this->FoodContainer = ItemContainer(176,216);
@@ -28,6 +30,10 @@ BossState::BossState(Player* player, ItemHandler* instantiator) : State(player) 
     tickCounter = 0;
     currentTurn = WAITING_FOR_INPUT;
     lastTurn = WAITING_FOR_INPUT;
+    this-> isDamaged = false;     // Tracks if the boss is in a damaged state
+    this-> damageStartTime = 0;  // Timer for showing the damage effect (in seconds)
+    this-> damageDuration = 1.0f;  // Duration to show the damage image
+
 }
 
 void BossState::equipTools(Item newItem) {
@@ -139,6 +145,8 @@ void BossState::damageBoss(int playerDamage) {
     if (this->bossHealth <= 0) {
         this->bossHealth = 0;
     }
+    isDamaged = true;
+    damageStartTime = ofGetElapsedTimef(); 
 }
 
 int BossState::getBossHealth() { return this->bossHealth; }
@@ -204,6 +212,12 @@ void BossState::update() {
             std::cout << "[DEBUG] Game Over state reached." << std::endl;
             break;
     }
+    if (isDamaged) {
+        float elapsedTime = ofGetElapsedTimef() - damageStartTime;
+        if (elapsedTime >= damageDuration) {
+            isDamaged = false;  // Revert to normal boss image
+        }
+    }
 }
 
 void BossState::draw() {
@@ -212,6 +226,12 @@ void BossState::draw() {
     this->ShieldContainer.draw();
     this->FoodContainer.draw();
     this->getPlayer()->draw();
+
+    if (isDamaged) {
+        bossDamageImage.draw(265, 13);  // Adjust (x, y) position as needed
+    } else {
+        bossImage.draw(265, 13);
+    }
 }
 
 void BossState::mouseMoved(int x, int y) {

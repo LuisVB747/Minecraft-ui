@@ -1,6 +1,6 @@
 #pragma once
 #include "State.h"
-
+#include "ofImage.h"
 
 /**
  * @class Boss
@@ -8,6 +8,12 @@
  */
 class BossState: public State {
     private:
+        ofImage bossImage;          // Normal boss image
+        ofImage bossDamageImage;    // Boss damage effect image
+        bool isDamaged;     // Tracks if the boss is in a damaged state
+        float damageStartTime;  // Timer for showing the damage effect (in seconds)
+        float damageDuration;  // Duration to show the damage image
+    
         ItemHandler* instantiator; // pointer to the item
         ItemContainer SwordContainer; ///< Container that holds the Attacking item.
         ItemContainer ShieldContainer; ///<  Container that holds the Defensive item.
