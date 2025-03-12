@@ -81,8 +81,6 @@ class BossState: public State {
          */
         int getPlayerDamage();
 
-        
-
          /**
          * @brief Updates the state. Mandatory unused implementation.
          */
