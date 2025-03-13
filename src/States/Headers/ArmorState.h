@@ -13,6 +13,8 @@ private:
     ItemContainer Chestplate;
     ItemContainer Leggins;
     ItemContainer Boots;
+    int defense;
+
 public:
     /**
      * @brief Constructs an ArmorState object with a player pointer.
@@ -55,5 +57,9 @@ public:
      * @brief Handles key press events. Mandatory unused implementation.
      */
     void mousePressed(int x, int y, int button);
+
+    int calculateArmorDefense(const std::string& armorName);
+    void removeOldDefense(ItemContainer &armorSlot);
+
 };
 
