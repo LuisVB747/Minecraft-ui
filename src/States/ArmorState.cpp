@@ -7,25 +7,75 @@ ArmorState :: ArmorState(Player* player, ItemHandler* instantiator) : State(play
     this->Chestplate = ItemContainer(323, 110);
     this->Leggins = ItemContainer(323, 184);
     this-> Boots = ItemContainer(323, 258);
+    this->defense = 0;
     
 };
+void ArmorState::removeOldDefense(ItemContainer &armorSlot) {
+    Item oldItem = armorSlot.getCurrentItem();
+    string oldName = oldItem.getName();
+
+    if (oldName.find("Leather") != std::string::npos) {
+        defense -= 5;
+    } 
+    else if (oldName.find("Gold") != std::string::npos) {
+        defense -= 10;
+    } 
+    else if (oldName.find("Iron") != std::string::npos) {
+        defense -= 20;
+    } 
+    else if (oldName.find("Diamond") != std::string::npos) {
+        defense -= 25;
+    }
+}
+
 
 void ArmorState::equipArmor(Item newItem) {
-    string itemName = newItem.getName(); 
+    string itemName = newItem.getName();
+    cout << "Equipping item: " << itemName << endl;  // Debugging
 
+    if (itemName.empty()) {
+        cout << "ERROR: Item name is empty!" << endl;
+        return;
+    }
+    
+    // Assign item to the correct slot and update defense
     if (itemName.find("helmet") != std::string::npos) {
-        this->Helmet.setCurrentItem(newItem);
+        removeOldDefense(Helmet);
+        Helmet.setCurrentItem(newItem);
     } 
     else if (itemName.find("Chestplate") != std::string::npos) {
-        this->Chestplate.setCurrentItem(newItem);
+        removeOldDefense(Chestplate);
+        Chestplate.setCurrentItem(newItem);
     } 
     else if (itemName.find("Leggings") != std::string::npos) {
-        this->Leggins.setCurrentItem(newItem);
+        removeOldDefense(Leggins);
+        Leggins.setCurrentItem(newItem);
     } 
     else if (itemName.find("Boots") != std::string::npos) {
-        this->Boots.setCurrentItem(newItem);
+        removeOldDefense(Boots);
+        Boots.setCurrentItem(newItem);
+    }
+
+    // Add new item's defense
+    if (itemName.find("Leather") != std::string::npos) {
+        defense += 5;
     } 
+    else if (itemName.find("Gold") != std::string::npos) {
+        defense += 10;
+    } 
+    else if (itemName.find("Iron") != std::string::npos) {
+        defense += 20;
+    } 
+    else if (itemName.find("Diamond") != std::string::npos) {
+        defense += 25;
+    }
+
+    cout << "Updated defense: " << defense << endl;
 }
+
+
+
+
 
 bool ArmorState::canEquip() {
     Item cursorItem = getPlayer()->getCursorContainer().getCurrentItem();
@@ -76,60 +126,65 @@ void ArmorState::keyPressed(int key){
 }
 
 void ArmorState::mousePressed(int x, int y, int button) {
-    State::mousePressed(x,y,button);
+    State::mousePressed(x, y, button);
 
     ItemContainer& cursorContainer = getPlayer()->getCursorContainer();
     Item cursorItem = cursorContainer.getCurrentItem();
 
-    // Handle left mouse click
+    // Handle left mouse click (equip/unequip logic)
     if (button == 0 || button == 2) {
         if (Helmet.isMouseHovering()) {
             if (cursorContainer.isEmpty()) {
                 // Unequip: Move the helmet to the cursor container
                 cursorContainer.setCurrentItem(Helmet.getCurrentItem());
                 cursorContainer.setItemCount(1);
-                Helmet.empty(); // Clear the helmet slot
+                removeOldDefense(Helmet);  // Subtract defense
+                Helmet.empty();  // Clear the helmet slot
             } else if (cursorItem.getName().find("helmet") != std::string::npos) {
                 // Equip: Move the cursor item to the helmet slot
-                equipArmor(cursorItem);
-                cursorContainer.empty(); // Clear the cursor
+                equipArmor(cursorItem);  // Add defense
+                cursorContainer.empty();  // Clear the cursor
             }
         } else if (Chestplate.isMouseHovering()) {
             if (cursorContainer.isEmpty()) {
                 // Unequip: Move the chestplate to the cursor container
                 cursorContainer.setCurrentItem(Chestplate.getCurrentItem());
                 cursorContainer.setItemCount(1);
-                Chestplate.empty(); // Clear the chestplate slot
+                removeOldDefense(Chestplate);  // Subtract defense
+                Chestplate.empty();  // Clear the chestplate slot
             } else if (cursorItem.getName().find("Chestplate") != std::string::npos) {
                 // Equip: Move the cursor item to the chestplate slot
-                equipArmor(cursorItem);
-                cursorContainer.empty(); // Clear the cursor
+                equipArmor(cursorItem);  // Add defense
+                cursorContainer.empty();  // Clear the cursor
             }
         } else if (Leggins.isMouseHovering()) {
             if (cursorContainer.isEmpty()) {
                 // Unequip: Move the leggings to the cursor container
                 cursorContainer.setCurrentItem(Leggins.getCurrentItem());
                 cursorContainer.setItemCount(1);
-                Leggins.empty(); // Clear the leggings slot
+                removeOldDefense(Leggins);  // Subtract defense
+                Leggins.empty();  // Clear the leggings slot
             } else if (cursorItem.getName().find("Leggings") != std::string::npos) {
                 // Equip: Move the cursor item to the leggings slot
-                equipArmor(cursorItem);
-                cursorContainer.empty(); // Clear the cursor
+                equipArmor(cursorItem);  // Add defense
+                cursorContainer.empty();  // Clear the cursor
             }
         } else if (Boots.isMouseHovering()) {
             if (cursorContainer.isEmpty()) {
                 // Unequip: Move the boots to the cursor container
                 cursorContainer.setCurrentItem(Boots.getCurrentItem());
                 cursorContainer.setItemCount(1);
-                Boots.empty(); // Clear the boots slot
+                removeOldDefense(Boots);  // Subtract defense
+                Boots.empty();  // Clear the boots slot
             } else if (cursorItem.getName().find("Boots") != std::string::npos) {
                 // Equip: Move the cursor item to the boots slot
-                equipArmor(cursorItem);
-                cursorContainer.empty(); // Clear the cursor
+                equipArmor(cursorItem);  // Add defense
+                cursorContainer.empty();  // Clear the cursor
             }
         }
     }
 }
+
 
     // Handle left mouse click
     // if (button == 0) {
