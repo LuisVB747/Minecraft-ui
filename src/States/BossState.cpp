@@ -11,6 +11,7 @@ BossState::BossState(Player* player, ItemHandler* instantiator) : State(player) 
     // Images 
     this->background.load("images/states/boss.png");
     this->halfHeart.load("images/sprites/half_heart.png");
+    this->halfHeartBoss.load("images/sprites/half_heart_boss.png");
     this->emptyHeart.load("images/sprites/empty_heart.png");
 
     // Containers
@@ -278,19 +279,19 @@ void BossState::draw() {
 
     // Draw Boss Health
     if (this->bossHealth <= 475 && this->bossHealth > 450) {
-        halfHeart.draw(297, 287);
+        halfHeartBoss.draw(297, 287);
     }else if (this->bossHealth <= 450 && this->bossHealth > 425) {
         emptyHeart.draw(297, 287);
     }else if (this->bossHealth <= 425 && this->bossHealth > 400) {
         emptyHeart.draw(297, 287);
-        halfHeart.draw(336, 287);
+        halfHeartBoss.draw(336, 287);
     }else if (this->bossHealth <= 400 && this->bossHealth > 375) {
         emptyHeart.draw(297, 287);
         emptyHeart.draw(336, 287);
     }else if (this->bossHealth <= 375 && this->bossHealth > 350) {
         emptyHeart.draw(297, 287);
         emptyHeart.draw(336, 287);
-        halfHeart.draw(375, 287);
+        halfHeartBoss.draw(375, 287);
     }else if (this->bossHealth <= 350 && this->bossHealth > 325) {
         emptyHeart.draw(297, 287);
         emptyHeart.draw(336, 287);
@@ -299,7 +300,7 @@ void BossState::draw() {
         emptyHeart.draw(297, 287);
         emptyHeart.draw(336, 287);
         emptyHeart.draw(375, 287);
-        halfHeart.draw(411, 287);
+        halfHeartBoss.draw(411, 287);
     }else if (this->bossHealth <= 300 && this->bossHealth > 275) {
         emptyHeart.draw(297, 287);
         emptyHeart.draw(336, 287);
@@ -310,7 +311,7 @@ void BossState::draw() {
         emptyHeart.draw(336, 287);
         emptyHeart.draw(375, 287);
         emptyHeart.draw(411, 287);
-        halfHeart.draw(449, 287);
+        halfHeartBoss.draw(449, 287);
     }else if (this->bossHealth <= 250 && this->bossHealth > 225) {
         emptyHeart.draw(297, 287);
         emptyHeart.draw(336, 287);
@@ -323,7 +324,7 @@ void BossState::draw() {
         emptyHeart.draw(373, 287);
         emptyHeart.draw(411, 287);
         emptyHeart.draw(449, 287);
-        halfHeart.draw(487, 287);
+        halfHeartBoss.draw(487, 287);
     }else if (this->bossHealth <= 200 && this->bossHealth > 175) {
         emptyHeart.draw(297, 287);
         emptyHeart.draw(335, 287);
@@ -338,7 +339,7 @@ void BossState::draw() {
         emptyHeart.draw(411, 287);
         emptyHeart.draw(449, 287);
         emptyHeart.draw(487, 287);
-        halfHeart.draw(525, 287);
+        halfHeartBoss.draw(525, 287);
     }else if (this->bossHealth <= 150 && this->bossHealth > 125) {
         emptyHeart.draw(297, 287);
         emptyHeart.draw(335, 287);
@@ -355,7 +356,7 @@ void BossState::draw() {
         emptyHeart.draw(449, 287);
         emptyHeart.draw(487, 287);
         emptyHeart.draw(525, 287);
-        halfHeart.draw(563, 287);
+        halfHeartBoss.draw(563, 287);
     }else if (this->bossHealth <= 100 && this->bossHealth > 75) {
         emptyHeart.draw(297, 287);
         emptyHeart.draw(335, 287);
@@ -374,7 +375,7 @@ void BossState::draw() {
         emptyHeart.draw(487, 287);
         emptyHeart.draw(525, 287);
         emptyHeart.draw(563, 287);
-        halfHeart.draw(601, 287);
+        halfHeartBoss.draw(601, 287);
     }else if (this->bossHealth <= 50 && this->bossHealth > 25) {
         emptyHeart.draw(297, 287);
         emptyHeart.draw(335, 287);
@@ -395,7 +396,7 @@ void BossState::draw() {
         emptyHeart.draw(525, 287);
         emptyHeart.draw(563, 287);
         emptyHeart.draw(601, 287);
-        halfHeart.draw(639, 287);
+        halfHeartBoss.draw(639, 287);
     }else if (this->bossHealth == 0) {
         emptyHeart.draw(297, 287); 
         emptyHeart.draw(335, 287);

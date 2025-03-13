@@ -8,6 +8,10 @@
  */
 class BossState: public State {
     private:
+        ofImage halfHeart; // Half heart of player
+        ofImage halfHeartBoss; // Half heart of boss
+        ofImage emptyHeart; // Empty heart of player and boss
+
         ofImage bossImage;          // Normal boss image
         ofImage bossDamageImage;    // Boss damage effect image
         bool isDamaged;     // Tracks if the boss is in a damaged state
@@ -57,9 +61,6 @@ class BossState: public State {
 
         BossState(Player* player, ItemHandler* instantiator);
 
-        // Heart images 
-        ofImage halfHeart;
-        ofImage emptyHeart;
 
         void equipTools(Item newItem);
 
