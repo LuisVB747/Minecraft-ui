@@ -7,9 +7,9 @@ const int PLAYER_ATTACK_DURATION = 60;    // Ticks for player attack resolution
 const int BOSS_ATTACK_DURATION = 200;        // Ticks for boss attack resolution
 const int TURN_TRANSITION_DURATION = 100;    // Ticks for transition between turns
 
-BossState::BossState(Player* player, ItemHandler* instantiator) : State(player) {
+BossState::BossState(Player* player, ItemHandler* instantiator, ArmorState* armorState) : State(player) {
     this->instantiator = instantiator;
-    this->armorState = new ArmorState(player, instantiator);
+    this->armorState = armorState;
 
     // Images 
     this->background.load("images/states/boss.png");
@@ -29,7 +29,7 @@ BossState::BossState(Player* player, ItemHandler* instantiator) : State(player) 
     this->bossHealth = 500; // max 500
     this->bossDamage = 15;
     
-    this->bossAccuracy = 7;
+    this->bossAccuracy = 8;
     // Player Stats
     this->playerDamage = 0;
     this->playerHealth = 100;
@@ -129,7 +129,7 @@ void BossState::doHealing(int foodHealing) {
     std::cout << "[DEBUG] Healing performed. Player Health: " << playerHealth << std::endl;
 }
 
-void BossState::damagePlayer(int bossDamage, int bossAccuracy) {
+void BossState::damagePlayer(int bossAccuracy) {
     static std::random_device rd;  
     static std::mt19937 gen(rd());  
     static std::uniform_int_distribution<> dis(1, 10);
@@ -197,7 +197,7 @@ void BossState::update() {
             std::cout << "[DEBUG] State: BOSS_ATTACKING, Tick: " << tickCounter << std::endl;
             if (tickCounter >= BOSS_ATTACK_DURATION) {
                 // Resolve boss's attack
-                damagePlayer(bossDamage, bossAccuracy);
+                damagePlayer(bossAccuracy);
                 lastTurn = BOSS_ATTACKING;
                 tickCounter = 0;
                 currentTurn = TURN_TRANSITION;
@@ -238,8 +238,7 @@ void BossState::update() {
             isAttack = false;  // Revert to normal boss image
         }
     }
-    float defense = armorState->getDefense();
-    this->bossDamage = 15 * (1.0f - (defense * 1.0f / 100));
+    this->bossDamage = 15 * (1.0f - (this->armorState->getDefense() * 1.0f / 200));
 }
 
 void BossState::draw() {

@@ -15,16 +15,16 @@ void ArmorState::removeOldDefense(ItemContainer &armorSlot) {
     string oldName = oldItem.getName();
 
     if (oldName.find("Leather") != std::string::npos) {
-        defense -= 5;
+        this->defense -= 5;
     } 
     else if (oldName.find("Gold") != std::string::npos) {
-        defense -= 10;
+        this->defense -= 10;
     } 
     else if (oldName.find("Iron") != std::string::npos) {
-        defense -= 20;
+        this->defense -= 20;
     } 
     else if (oldName.find("Diamond") != std::string::npos) {
-        defense -= 25;
+        this->defense -= 25;
     }
 }
 
@@ -59,19 +59,19 @@ void ArmorState::equipArmor(Item newItem) {
 
     // Add new item's defense
     if (itemName.find("Leather") != std::string::npos) {
-        defense += 5;
+        this->defense += 5;
     } 
     else if (itemName.find("Gold") != std::string::npos) {
-        defense += 10;
+        this->defense += 10;
     } 
     else if (itemName.find("Iron") != std::string::npos) {
-        defense += 20;
+        this->defense += 20;
     } 
     else if (itemName.find("Diamond") != std::string::npos) {
-        defense += 25;
+        this->defense += 25;
     }
 
-    cout << "Updated defense: " << defense << endl;
+    cout << "Updated defense: " << this-> getDefense() << endl;
 }
 
 
@@ -92,7 +92,7 @@ bool ArmorState::canEquip() {
  }
 
 void ArmorState::update() { 
-
+    this->getDefense();
 }
 
 void ArmorState::draw() {

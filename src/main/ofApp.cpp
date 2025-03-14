@@ -10,7 +10,7 @@ void ofApp::setup() {
     this->generatorState = new GeneratorState(player, instantiator);
     this->armorState = new ArmorState(player, instantiator);
     this->worldState = new WorldState(player, instantiator);
-    this->bossState = new BossState(player, instantiator);
+    this->bossState = new BossState(player, instantiator, this->armorState);
 
     this->relaxingMusic.load("audio/miceOnVenus.mp3");
     this->relaxingMusic.play();

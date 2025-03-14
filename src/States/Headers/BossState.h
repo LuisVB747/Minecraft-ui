@@ -51,7 +51,7 @@ class BossState: public State {
         TurnState lastTurn;
      
 
-        void damagePlayer(int bossDamage, int bossAccuracy); // Damage done to the player
+        void damagePlayer(int bossAccuracy); // Damage done to the player
         void damageBoss(int playerDamage); // Damage done to the boss
 
         void doHealing(int foodHealing); // Heals player when the button is pressed
@@ -62,7 +62,7 @@ class BossState: public State {
     public:
 
 
-        BossState(Player* player, ItemHandler* instantiator);
+        BossState(Player* player, ItemHandler* instantiator, ArmorState* armorState);
 
 
         void equipTools(Item newItem);
