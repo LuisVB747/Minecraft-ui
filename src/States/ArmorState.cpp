@@ -29,6 +29,7 @@ void ArmorState::removeOldDefense(ItemContainer &armorSlot) {
 }
 
 
+
 void ArmorState::equipArmor(Item newItem) {
     string itemName = newItem.getName();
     cout << "Equipping item: " << itemName << endl;  // Debugging
@@ -91,10 +92,6 @@ bool ArmorState::canEquip() {
  }
 
 void ArmorState::update() { 
-    // if(canEquip()) { 
-    // Item cursorItem = getPlayer()->getCursorContainer().getCurrentItem();
-    //     equipArmor(cursorItem);
-//  }
 
 }
 
@@ -123,6 +120,9 @@ void ArmorState::mouseMoved(int x, int y){
 
 void ArmorState::keyPressed(int key){
 
+}
+float ArmorState::getDefense(){
+    return this->defense;
 }
 
 void ArmorState::mousePressed(int x, int y, int button) {

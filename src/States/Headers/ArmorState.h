@@ -35,6 +35,8 @@ public:
      */
     bool canEquip();
 
+    float getDefense();  
+
     /**
      * @brief Updates the state.
      */

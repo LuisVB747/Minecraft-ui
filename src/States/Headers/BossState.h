@@ -1,6 +1,7 @@
 #pragma once
 #include "State.h"
 #include "ofImage.h"
+#include "ArmorState.h"
 
 /**
  * @class Boss
@@ -11,9 +12,11 @@ class BossState: public State {
         ofImage halfHeart; // Half heart of player
         ofImage halfHeartBoss; // Half heart of boss
         ofImage emptyHeart; // Empty heart of player and boss
-
+        ArmorState* armorState; ///< Pointer to the armor state.
         ofImage bossImage;          // Normal boss image
         ofImage bossDamageImage;    // Boss damage effect image
+        ofImage bossAttackImage;
+        bool isAttack;
         bool isDamaged;     // Tracks if the boss is in a damaged state
         float damageStartTime;  // Timer for showing the damage effect (in seconds)
         float damageDuration;  // Duration to show the damage image

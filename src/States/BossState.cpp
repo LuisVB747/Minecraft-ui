@@ -1,13 +1,16 @@
 #include "BossState.h"
+#include "ArmorState.h"
 #include <random>
 #include <iostream>
 
 const int PLAYER_ATTACK_DURATION = 60;    // Ticks for player attack resolution
-const int BOSS_ATTACK_DURATION = 60;        // Ticks for boss attack resolution
-const int TURN_TRANSITION_DURATION = 30;    // Ticks for transition between turns
+const int BOSS_ATTACK_DURATION = 200;        // Ticks for boss attack resolution
+const int TURN_TRANSITION_DURATION = 100;    // Ticks for transition between turns
 
 BossState::BossState(Player* player, ItemHandler* instantiator) : State(player) {
     this->instantiator = instantiator;
+    this->armorState = new ArmorState(player, instantiator);
+
     // Images 
     this->background.load("images/states/boss.png");
     this->halfHeart.load("images/sprites/half_heart.png");
@@ -17,6 +20,7 @@ BossState::BossState(Player* player, ItemHandler* instantiator) : State(player) 
     // Containers
     this->bossImage.load("images/sprites/ender.png");
     this->bossDamageImage.load("images/sprites/ender_damaged.png");
+    this->bossAttackImage.load("images/sprites/ender_attack.png");
     this->SwordContainer = ItemContainer(176, 72);
     this->ShieldContainer = ItemContainer(176, 144); 
     this->FoodContainer = ItemContainer(176,216);
@@ -24,6 +28,7 @@ BossState::BossState(Player* player, ItemHandler* instantiator) : State(player) 
     // Boss Stats 
     this->bossHealth = 500; // max 500
     this->bossDamage = 15;
+    
     this->bossAccuracy = 7;
     // Player Stats
     this->playerDamage = 0;
@@ -37,8 +42,9 @@ BossState::BossState(Player* player, ItemHandler* instantiator) : State(player) 
     currentTurn = WAITING_FOR_INPUT;
     lastTurn = WAITING_FOR_INPUT;
     this-> isDamaged = false;     // Tracks if the boss is in a damaged state
+    this-> isAttack = false; // tracks the boss attacks
     this-> damageStartTime = 0;  // Timer for showing the damage effect (in seconds)
-    this-> damageDuration = 1.0f;  // Duration to show the damage image
+    this-> damageDuration = 0.75f;  // Duration to show the damage image
 
 }
 
@@ -141,6 +147,8 @@ void BossState::damagePlayer(int bossDamage, int bossAccuracy) {
     } else {
         std::cout << "[DEBUG] Boss attack missed!" << std::endl;
     }
+    isAttack = true;
+    damageStartTime = ofGetElapsedTimef();
 }
 
 void BossState::damageBoss(int playerDamage) {
@@ -224,6 +232,14 @@ void BossState::update() {
             isDamaged = false;  // Revert to normal boss image
         }
     }
+    if (isAttack) {
+        float elapsedTime = ofGetElapsedTimef() - damageStartTime;
+        if (elapsedTime >= damageDuration) {
+            isAttack = false;  // Revert to normal boss image
+        }
+    }
+    float defense = armorState->getDefense();
+    this->bossDamage = 15 * (1.0f - (defense * 1.0f / 100));
 }
 
 void BossState::draw() {
@@ -411,7 +427,11 @@ void BossState::draw() {
     }
     if (isDamaged) {
         bossDamageImage.draw(265, 13);  // Adjust (x, y) position as needed
-    } else {
+    } 
+    else if (isAttack){
+        bossAttackImage.draw(265,13);
+    }
+    else {
         bossImage.draw(265, 13);
     }
 }
