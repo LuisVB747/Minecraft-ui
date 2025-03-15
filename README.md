@@ -12,8 +12,8 @@ Don't forget that you must also fill out an evaluation form in Moodle to conside
 
 ## Grading
 
-(STUDENT NUMBER) (STUDENT NAME) (STUDENT EMAIL)
-(STUDENT NUMBER) (STUDENT NAME) (STUDENT EMAIL)
+(802-24-1430) (Luis D. Valentin) (luis.valentin28@upr.edu)
+(802-24-0473) (Johniel Lopez) (johniel.lopez1@upr.edu)
 
 Any project that doesn't compile will receive a 0.
 
