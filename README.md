@@ -21,3 +21,12 @@ If a partner has no commits in the repositories, they'll will receive a 0.
 
 ## Student Notes
 If you have any bonus specs, bonus or any details the TA's should know, you should include it here:
+
+## Bonus: 
+- Added an Armor State: State where you equip armor and defensive stats will be added to the player.
+
+- Added a Boss State: State where you fight a Boss, which in this case was the Ender Dragon. You attack the boss and recieve damage from the boss. 
+
+- Added a 3D World State: State where you can move and destroy blocks (had some issues putting blocks between and with other implementations, so for final product we took those out.)
+
+- Added different items and changed/fixed some items from the original sprite.
