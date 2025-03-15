@@ -507,7 +507,14 @@ pair<Item, int> CraftingState::getItemFromRecipie(vector<int> grid) {
             35, 0, 35}){
         result.first = instantiator->getItemFromNumber(77);
         result.second = 1;
-    }   
+    }
+    if(grid == vector<int> // Shield
+        {3, 3, 3,
+        3, 34, 3,
+        3, 3, 3}){
+    result.first = instantiator->getItemFromNumber(79);
+    result.second = 1;
+    } 
         return result;    
 
 }

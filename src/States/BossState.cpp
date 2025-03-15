@@ -55,7 +55,7 @@ void BossState::equipTools(Item newItem) {
         this->SwordContainer.setCurrentItem(newItem);
         calculateSwordDamage(itemName);
         playerDamage = swordDamage;
-        std::cout << "[DEBUG] Equipped Sword. PlayerDamage: " << playerDamage << std::endl;
+        // std::cout << "[DEBUG] Equipped Sword. PlayerDamage: " << playerDamage << std::endl;
     }
     else if(itemName.find("Shield") != std::string::npos) {
         this->ShieldContainer.setCurrentItem(newItem);
@@ -67,7 +67,7 @@ void BossState::equipTools(Item newItem) {
             itemName.find("Potato") != std::string::npos || 
             itemName.find("Apple") != std::string::npos) {
         this->FoodContainer.setCurrentItem(newItem);
-        std::cout << "[DEBUG] Equipped Food." << std::endl;
+       // std::cout << "[DEBUG] Equipped Food." << std::endl;
     }
 }
 
@@ -126,7 +126,7 @@ void BossState::doHealing(int foodHealing) {
     if (this->playerHealth > 100) {
         this->playerHealth = 100;
     }
-    std::cout << "[DEBUG] Healing performed. Player Health: " << playerHealth << std::endl;
+   // std::cout << "[DEBUG] Healing performed. Player Health: " << playerHealth << std::endl;
 }
 
 void BossState::damagePlayer(int bossAccuracy) {
@@ -140,13 +140,13 @@ void BossState::damagePlayer(int bossAccuracy) {
             bossDamage /= 3;  // Reduce damage if shield is equipped
         }
         this->playerHealth -= bossDamage;
-        std::cout << "[DEBUG] Boss attacks! Player takes " << bossDamage << " damage. Player Health: " << playerHealth << std::endl;
+       // std::cout << "[DEBUG] Boss attacks! Player takes " << bossDamage << " damage. Player Health: " << playerHealth << std::endl;
         if (this->playerHealth <= 0) {
             this->playerHealth = 0;
         }
-    } else {
-        std::cout << "[DEBUG] Boss attack missed!" << std::endl;
-    }
+    } //else {
+      //  std::cout << "[DEBUG] Boss attack missed!" << std::endl;
+    // }
     isAttack = true;
     damageStartTime = ofGetElapsedTimef();
 }
@@ -155,7 +155,7 @@ void BossState::damageBoss(int playerDamage) {
     // Use combined damage: playerDamage + swordDamage
     int totalDamage = playerDamage; // Here, we assume playerDamage is set to include the sword's bonus.
     this->bossHealth -= totalDamage;
-    std::cout << "[DEBUG] Player attacks! Boss takes " << totalDamage << " damage. Boss Health: " << bossHealth << std::endl;
+  //  std::cout << "[DEBUG] Player attacks! Boss takes " << totalDamage << " damage. Boss Health: " << bossHealth << std::endl;
     if (this->bossHealth <= 0) {
         this->bossHealth = 0;
     }
@@ -182,40 +182,40 @@ void BossState::update() {
             break;
 
         case PLAYER_ATTACKING:
-            std::cout << "[DEBUG] State: PLAYER_ATTACKING, Tick: " << tickCounter << std::endl;
+         //   std::cout << "[DEBUG] State: PLAYER_ATTACKING, Tick: " << tickCounter << std::endl;
             if (tickCounter >= PLAYER_ATTACK_DURATION) {
                 // Resolve player's attack
                 damageBoss(playerDamage + swordDamage);
                 lastTurn = PLAYER_ATTACKING;
                 tickCounter = 0;
                 currentTurn = TURN_TRANSITION;
-                std::cout << "[DEBUG] Transitioning from PLAYER_ATTACKING to TURN_TRANSITION." << std::endl;
+             //   std::cout << "[DEBUG] Transitioning from PLAYER_ATTACKING to TURN_TRANSITION." << std::endl;
             }
             break;
 
         case BOSS_ATTACKING:
-            std::cout << "[DEBUG] State: BOSS_ATTACKING, Tick: " << tickCounter << std::endl;
+        //    std::cout << "[DEBUG] State: BOSS_ATTACKING, Tick: " << tickCounter << std::endl;
             if (tickCounter >= BOSS_ATTACK_DURATION) {
                 // Resolve boss's attack
                 damagePlayer(bossAccuracy);
                 lastTurn = BOSS_ATTACKING;
                 tickCounter = 0;
                 currentTurn = TURN_TRANSITION;
-                std::cout << "[DEBUG] Transitioning from BOSS_ATTACKING to TURN_TRANSITION." << std::endl;
+           //     std::cout << "[DEBUG] Transitioning from BOSS_ATTACKING to TURN_TRANSITION." << std::endl;
             }
             break;
 
         case TURN_TRANSITION:
-            std::cout << "[DEBUG] State: TURN_TRANSITION, Tick: " << tickCounter << std::endl;
+          //  std::cout << "[DEBUG] State: TURN_TRANSITION, Tick: " << tickCounter << std::endl;
             if (tickCounter >= TURN_TRANSITION_DURATION) {
                 tickCounter = 0;
                 // Alternate turn: if the player attacked last, now it's the boss's turn; otherwise, return to waiting.
                 if (lastTurn == PLAYER_ATTACKING) {
                     currentTurn = BOSS_ATTACKING;
-                    std::cout << "[DEBUG] Turn transitioned: Now BOSS_ATTACKING." << std::endl;
+              //      std::cout << "[DEBUG] Turn transitioned: Now BOSS_ATTACKING." << std::endl;
                 } else if (lastTurn == BOSS_ATTACKING) {
                     currentTurn = WAITING_FOR_INPUT;
-                    std::cout << "[DEBUG] Turn transitioned: Now WAITING_FOR_INPUT." << std::endl;
+              //      std::cout << "[DEBUG] Turn transitioned: Now WAITING_FOR_INPUT." << std::endl;
                 } else {
                     currentTurn = WAITING_FOR_INPUT;
                 }
@@ -223,7 +223,7 @@ void BossState::update() {
             break;
 
         case GAME_OVER:
-            std::cout << "[DEBUG] Game Over state reached." << std::endl;
+         //   std::cout << "[DEBUG] Game Over state reached." << std::endl;
             break;
     }
     if (isDamaged) {
@@ -487,25 +487,25 @@ void BossState::mousePressed(int x, int y, int button) {
 
 void BossState::keyPressed(int key) {
     // Print out the received key code for debugging
-    std::cout << "[DEBUG] keyPressed received key: " << key << std::endl;
+   // std::cout << "[DEBUG] keyPressed received key: " << key << std::endl;
     
     // Check for 'h' or 'H' (Heal)
     if ((key == 'h' || key == 'H') && currentTurn == WAITING_FOR_INPUT) {
         doHealing(foodHealing);
-        std::cout << "[DEBUG] Key 'h' pressed. Transitioning to BOSS_ATTACKING." << std::endl;
+      //  std::cout << "[DEBUG] Key 'h' pressed. Transitioning to BOSS_ATTACKING." << std::endl;
         currentTurn = BOSS_ATTACKING;
         tickCounter = 0;
     }
     // Check for 'a' or 'A' (Attack)
     if ((key == 'a' || key == 'A') && currentTurn == WAITING_FOR_INPUT) {
         damageBoss(playerDamage + swordDamage);
-        std::cout << "[DEBUG] Key 'a' pressed. Transitioning to BOSS_ATTACKING." << std::endl;
+      //  std::cout << "[DEBUG] Key 'a' pressed. Transitioning to BOSS_ATTACKING." << std::endl;
         currentTurn = BOSS_ATTACKING;
         tickCounter = 0;
     }
     // Check for 'd' or 'D' (Defend - placeholder)
     if ((key == 'd' || key == 'D') && currentTurn == WAITING_FOR_INPUT) {
-        std::cout << "[DEBUG] Key 'd' pressed (defend action placeholder). Transitioning to BOSS_ATTACKING." << std::endl;
+      //  std::cout << "[DEBUG] Key 'd' pressed (defend action placeholder). Transitioning to BOSS_ATTACKING." << std::endl;
         // You can add defend logic here if desired.
         currentTurn = BOSS_ATTACKING;
         tickCounter = 0;
