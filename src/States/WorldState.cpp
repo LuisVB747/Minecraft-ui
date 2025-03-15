@@ -174,7 +174,7 @@ void WorldState::keyPressed(int key) {
         newPosition.y -= moveSpeed;
     }
 
-    // Check if the new position is valid (no collisions)
+    // Check if the new position is valid 
     if (!isColliding(newPosition.x, newPosition.y, newPosition.z)) {
         playerPosition = newPosition; // Update player position
     }
@@ -209,7 +209,7 @@ Block WorldState::getBlockAt(int x, int y, int z) const {
     return Block(0); // Air block
 }
 bool WorldState::isColliding(float x, float y, float z) {
-    // Player bounding box (1x2x1 blocks)
+    // Player bounding box
     float playerWidth = 0.5f; // Half the player's width
     float playerHeight = 1.8f; // Player's height
     float playerDepth = 0.5f; // Half the player's depth
@@ -262,7 +262,7 @@ void WorldState::checkCollisions(){
     }
     
     bool WorldState::raycast(const ofVec3f& start, const ofVec3f& end, int& blockX, int& blockY, int& blockZ) {
-        float stepSize = 0.01f; // Smaller step size = more accurate raycasting
+        float stepSize = 0.01f; 
         ofVec3f direction = (end - start).getNormalized();
         ofVec3f current = start;
     
@@ -451,9 +451,9 @@ void WorldState::placeBlock(int x, int y, int z, Block block) {
     int blockZ = z % 16;
 
     if (chunkX >= 0 && chunkX < 5 && chunkY >= 0 && chunkY < 5 && chunkZ >= 0 && chunkZ < 5) {
-        // Check if the block can be placed (e.g., not inside the player)
+        // Check if the block can be placed 
         if (!isColliding(x, y, z)) {
-            // Find the selected slot in the hotbar (slots 18-26)
+            // Find the selected slot in the hotbar 
             int selectedSlot = 18; // Default to the first slot in the hotbar
             for (int i = 18; i < 27; ++i) {
                 if (!inventory[i].isEmpty() && inventory[i].getCurrentItem().getItemNumber() == block.getType()) {
@@ -528,7 +528,7 @@ void WorldState::drawCube(float x, float y, float z, float size) {
         {4, 5, 1, 0}  // Bottom face
     };
 
-    // 🎨 Draw the filled cube first
+    // Draw the filled cube first
     glBegin(GL_QUADS);
     for (int i = 0; i < 6; ++i) {
         for (int j = 0; j < 4; ++j) {
@@ -537,7 +537,7 @@ void WorldState::drawCube(float x, float y, float z, float size) {
     }
     glEnd();
 
-    // 🖊 Draw the outline (wireframe mode)
+    // Draw the outline 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glLineWidth(2.0f);  // Outline thickness
     glColor3f(0.0f, 0.0f, 0.0f);  // Black outline

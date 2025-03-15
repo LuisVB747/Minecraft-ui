@@ -31,7 +31,7 @@ void Camera::update() {
     ofVec3f right = forward.getCrossed(ofVec3f(0, 1, 0)).normalize();
     ofVec3f up = right.getCrossed(forward).normalize();
 
-    // Build the view matrix (lookAt)
+    // Build the view matrix 
     viewMatrix.makeLookAtViewMatrix(position, position + forward, up);
 }
 
