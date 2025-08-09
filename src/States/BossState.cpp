@@ -16,6 +16,8 @@ BossState::BossState(Player* player, ItemHandler* instantiator, ArmorState* armo
     this->halfHeart.load("images/sprites/half_heart.png");
     this->halfHeartBoss.load("images/sprites/half_heart_boss.png");
     this->emptyHeart.load("images/sprites/empty_heart.png");
+    this->fullHeart.load("images/sprites/full_heart.png");
+    this->fullHeartBoss.load("images/sprites/full_heart_boss.png");
 
     // Containers
     this->bossImage.load("images/sprites/ender.png");
@@ -67,6 +69,8 @@ void BossState::equipTools(Item newItem) {
             itemName.find("Potato") != std::string::npos || 
             itemName.find("Apple") != std::string::npos) {
         this->FoodContainer.setCurrentItem(newItem);
+        this->FoodContainer.setItemCount(getPlayer()->getCursorContainer().getItemCount());
+        calculateHealing(itemName);
        // std::cout << "[DEBUG] Equipped Food." << std::endl;
     }
 }
@@ -126,7 +130,12 @@ void BossState::doHealing(int foodHealing) {
     if (this->playerHealth > 100) {
         this->playerHealth = 100;
     }
-   // std::cout << "[DEBUG] Healing performed. Player Health: " << playerHealth << std::endl;
+    int count = this->FoodContainer.getItemCount();
+    if (count > 1) {
+        this->FoodContainer.setItemCount(count - 1);
+    } else {
+        this->FoodContainer.empty();
+    }   // std::cout << "[DEBUG] Healing performed. Player Health: " << playerHealth << std::endl;
 }
 
 void BossState::damagePlayer(int bossAccuracy) {
@@ -248,190 +257,45 @@ void BossState::draw() {
     this->FoodContainer.draw();
     this->getPlayer()->draw();
 
+    // --- Player Health Drawing ---
+    int playerHeartPositions[] = {20, 58, 96, 134, 172}; // left to right
+    int playerFullHearts = playerHealth / 20;
+    int playerHalfHeart = (playerHealth % 20) >= 10 ? 1 : 0;
 
-    // Draw Players Health
-    if (this->playerHealth <= 90 && this->playerHealth > 80) {
-        halfHeart.draw(172, 22);
-    }else if (this->playerHealth <= 80 && this->playerHealth > 70) {
-        emptyHeart.draw(172, 22);
-    }else if (this->playerHealth <= 70 && this->playerHealth > 60) {
-        emptyHeart.draw(172, 22);
-        halfHeart.draw(134, 22);
-    }else if (this->playerHealth <= 60 && this->playerHealth > 50) {
-        emptyHeart.draw(172, 22);
-        emptyHeart.draw(134, 22);
-    }else if (this->playerHealth <= 50 && this->playerHealth > 40) {
-        emptyHeart.draw(172, 22);
-        emptyHeart.draw(134, 22);
-        halfHeart.draw(96, 22);
-    }else if (this->playerHealth <= 40 && this->playerHealth > 30) {
-        emptyHeart.draw(172, 22);
-        emptyHeart.draw(134, 22);
-        emptyHeart.draw(96, 22);
-    }else if (this->playerHealth <= 30 && this->playerHealth > 20) {
-        emptyHeart.draw(172, 22);
-        emptyHeart.draw(134, 22);
-        emptyHeart.draw(96, 22);
-        halfHeart.draw(58, 22);
-    }else if (this->playerHealth <= 20 && this->playerHealth > 10) {
-        emptyHeart.draw(172, 22);
-        emptyHeart.draw(134, 22);
-        emptyHeart.draw(96, 22);
-        emptyHeart.draw(58, 22);
-    }else if (this->playerHealth <= 10 && this->playerHealth > 0) {
-        emptyHeart.draw(172, 22);
-        emptyHeart.draw(134, 22);
-        emptyHeart.draw(96, 22);
-        emptyHeart.draw(58, 22);
-        halfHeart.draw(20, 22);
-    }else if (this->playerHealth == 0) {
-        emptyHeart.draw(172, 22);
-        emptyHeart.draw(134, 22);
-        emptyHeart.draw(96, 22);
-        emptyHeart.draw(58, 22);
-        emptyHeart.draw(20, 22);
+    for (int i = 0; i < 5; ++i) {
+        if (i < playerFullHearts) {
+            fullHeart.draw(playerHeartPositions[i], 22);
+        } else if (i == playerFullHearts && playerHalfHeart) {
+            halfHeart.draw(playerHeartPositions[i], 22);
+        } else {
+            emptyHeart.draw(playerHeartPositions[i], 22);
+        }
     }
 
-    // Draw Boss Health
-    if (this->bossHealth <= 475 && this->bossHealth > 450) {
-        halfHeartBoss.draw(297, 287);
-    }else if (this->bossHealth <= 450 && this->bossHealth > 425) {
-        emptyHeart.draw(297, 287);
-    }else if (this->bossHealth <= 425 && this->bossHealth > 400) {
-        emptyHeart.draw(297, 287);
-        halfHeartBoss.draw(336, 287);
-    }else if (this->bossHealth <= 400 && this->bossHealth > 375) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(336, 287);
-    }else if (this->bossHealth <= 375 && this->bossHealth > 350) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(336, 287);
-        halfHeartBoss.draw(375, 287);
-    }else if (this->bossHealth <= 350 && this->bossHealth > 325) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(336, 287);
-        emptyHeart.draw(375, 287);
-    }else if (this->bossHealth <= 325 && this->bossHealth > 300) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(336, 287);
-        emptyHeart.draw(375, 287);
-        halfHeartBoss.draw(411, 287);
-    }else if (this->bossHealth <= 300 && this->bossHealth > 275) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(336, 287);
-        emptyHeart.draw(375, 287);
-        emptyHeart.draw(411, 287);
-    }else if (this->bossHealth <= 275 && this->bossHealth > 250) { 
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(336, 287);
-        emptyHeart.draw(375, 287);
-        emptyHeart.draw(411, 287);
-        halfHeartBoss.draw(449, 287);
-    }else if (this->bossHealth <= 250 && this->bossHealth > 225) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(336, 287);
-        emptyHeart.draw(375, 287);
-        emptyHeart.draw(411, 287);
-        emptyHeart.draw(449, 287);
-    }else if (this->bossHealth <= 225 && this->bossHealth > 200) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(335, 287);
-        emptyHeart.draw(373, 287);
-        emptyHeart.draw(411, 287);
-        emptyHeart.draw(449, 287);
-        halfHeartBoss.draw(487, 287);
-    }else if (this->bossHealth <= 200 && this->bossHealth > 175) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(335, 287);
-        emptyHeart.draw(373, 287);
-        emptyHeart.draw(411, 287);
-        emptyHeart.draw(449, 287);
-        emptyHeart.draw(487, 287);
-    }else if (this->bossHealth <= 175 && this->bossHealth > 150) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(335, 287);
-        emptyHeart.draw(373, 287);
-        emptyHeart.draw(411, 287);
-        emptyHeart.draw(449, 287);
-        emptyHeart.draw(487, 287);
-        halfHeartBoss.draw(525, 287);
-    }else if (this->bossHealth <= 150 && this->bossHealth > 125) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(335, 287);
-        emptyHeart.draw(373, 287);
-        emptyHeart.draw(411, 287);
-        emptyHeart.draw(449, 287);
-        emptyHeart.draw(487, 287);
-        emptyHeart.draw(525, 287);
-    }else if (this->bossHealth <= 125 && this->bossHealth > 100) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(335, 287);
-        emptyHeart.draw(373, 287);
-        emptyHeart.draw(411, 287);
-        emptyHeart.draw(449, 287);
-        emptyHeart.draw(487, 287);
-        emptyHeart.draw(525, 287);
-        halfHeartBoss.draw(563, 287);
-    }else if (this->bossHealth <= 100 && this->bossHealth > 75) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(335, 287);
-        emptyHeart.draw(373, 287);
-        emptyHeart.draw(411, 287);
-        emptyHeart.draw(449, 287);
-        emptyHeart.draw(487, 287);
-        emptyHeart.draw(525, 287);
-        emptyHeart.draw(563, 287);
-    }else if (this->bossHealth <= 75 && this->bossHealth > 50) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(335, 287);
-        emptyHeart.draw(373, 287);
-        emptyHeart.draw(411, 287);
-        emptyHeart.draw(449, 287);
-        emptyHeart.draw(487, 287);
-        emptyHeart.draw(525, 287);
-        emptyHeart.draw(563, 287);
-        halfHeartBoss.draw(601, 287);
-    }else if (this->bossHealth <= 50 && this->bossHealth > 25) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(335, 287);
-        emptyHeart.draw(373, 287);
-        emptyHeart.draw(411, 287);
-        emptyHeart.draw(449, 287);
-        emptyHeart.draw(487, 287);
-        emptyHeart.draw(525, 287);
-        emptyHeart.draw(563, 287);
-        emptyHeart.draw(601, 287);
-    }else if (this->bossHealth <= 25 && this->bossHealth > 0) {
-        emptyHeart.draw(297, 287);
-        emptyHeart.draw(335, 287);
-        emptyHeart.draw(373, 287);
-        emptyHeart.draw(411, 287);
-        emptyHeart.draw(449, 287);
-        emptyHeart.draw(487, 287);
-        emptyHeart.draw(525, 287);
-        emptyHeart.draw(563, 287);
-        emptyHeart.draw(601, 287);
-        halfHeartBoss.draw(639, 287);
-    }else if (this->bossHealth == 0) {
-        emptyHeart.draw(297, 287); 
-        emptyHeart.draw(335, 287);
-        emptyHeart.draw(373, 287);
-        emptyHeart.draw(411, 287);
-        emptyHeart.draw(449, 287);
-        emptyHeart.draw(487, 287);
-        emptyHeart.draw(525, 287);
-        emptyHeart.draw(563, 287);
-        emptyHeart.draw(601, 287);
-        emptyHeart.draw(639, 287);
-    }
+    // Boss image logic (draw boss first, then hearts on top)
     if (isDamaged) {
-        bossDamageImage.draw(265, 13);  // Adjust (x, y) position as needed
+        bossDamageImage.draw(265, 13);
     } 
     else if (isAttack){
         bossAttackImage.draw(265,13);
     }
     else {
         bossImage.draw(265, 13);
+    }
+
+    // --- Boss Health Drawing ---
+    int bossHeartPositions[] = {297, 336, 375, 411, 449, 487, 525, 563, 601, 639}; // left to right
+    int bossFullHearts = bossHealth / 50;
+    int bossHalfHeart = (bossHealth % 50) >= 25 ? 1 : 0;
+
+    for (int i = 0; i < 10; ++i) {
+        if (i < bossFullHearts) {
+            fullHeartBoss.draw(bossHeartPositions[i], 287);
+        } else if (i == bossFullHearts && bossHalfHeart) {
+            halfHeartBoss.draw(bossHeartPositions[i], 287);
+        } else {
+            emptyHeart.draw(bossHeartPositions[i], 287);
+        }
     }
 }
     

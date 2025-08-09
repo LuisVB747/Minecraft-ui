@@ -8,7 +8,6 @@
 #include "FurnaceState.h"
 #include "GeneratorState.h"
 #include "ArmorState.h"
-#include "WorldState.h"
 #include <GL/gl.h> // Include OpenGL headers
 #include <GL/glu.h> // Include GLU utilities (optional)
 
@@ -29,7 +28,6 @@ public:
     FurnaceState* furnaceState; ///< Pointer to the furnace state.
     GeneratorState* generatorState; ///< Pointer to the generator state.
     ArmorState* armorState; ///< Pointer to the armor state.
-    WorldState* worldState; ///< Pointer to the world state.
     BossState* bossState; ///< Pointer to the boss state
 
 

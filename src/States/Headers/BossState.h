@@ -16,6 +16,8 @@ class BossState: public State {
         ofImage bossImage;          // Normal boss image
         ofImage bossDamageImage;    // Boss damage effect image
         ofImage bossAttackImage;
+        ofImage fullHeart;
+        ofImage fullHeartBoss;
         bool isAttack;
         bool isDamaged;     // Tracks if the boss is in a damaged state
         float damageStartTime;  // Timer for showing the damage effect (in seconds)

@@ -9,7 +9,6 @@ void ofApp::setup() {
     this->furnaceState = new FurnaceState(player, instantiator);
     this->generatorState = new GeneratorState(player, instantiator);
     this->armorState = new ArmorState(player, instantiator);
-    this->worldState = new WorldState(player, instantiator);
     this->bossState = new BossState(player, instantiator, this->armorState);
 
     this->relaxingMusic.load("audio/miceOnVenus.mp3");
@@ -67,8 +66,6 @@ void ofApp::mousePressed(int x, int y, int button) {
                     this->currentState = generatorState;
                 } else if (stateButton.getTargetState() == "Armor") {
                     this->currentState = armorState;
-                } else if(stateButton.getTargetState() == "world"){
-                    this->currentState = worldState;
                 }
                 else if(stateButton.getTargetState() == "boss"){
                     this->currentState = bossState;
